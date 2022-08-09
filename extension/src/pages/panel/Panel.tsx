@@ -1,11 +1,24 @@
-import logo from "@assets/img/logo.svg";
+import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
+// import logo from "@assets/img/logo.svg";
 import styles from "./Panel.module.css";
+//import signalist
 
-const Panel = () => {
+// grabbing root
+export function DevTool(props) {
+  const [children, root] = createRoot(() => [props.children, getOwner()]);
+  console.log(children());
+  console.log({root});
+  console.log('-----------');
+}
+
+
+
+export function Panel() {
+  
   return (
     <div class={styles.App}>
       <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
+        {/* <img src={logo} class={styles.logo} alt="logo" /> */}
         <p>
           Edit <code>src/pages/panel/Panel.tsx</code> and save to reload.
         </p>
@@ -15,11 +28,12 @@ const Panel = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn Solid
+          Testing solid
         </a>
       </header>
+      <SignalList root = {root}>
+
+      </SignalList>
     </div>
   );
 };
-
-export default Panel;
