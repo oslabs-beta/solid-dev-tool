@@ -1,6 +1,6 @@
 import { render } from "solid-js/web";
 import "./index.css";
-import { Panel } from "./Panel";// our logic would go
+import  Panel  from "./Panel";
 
 const appContainer = document.querySelector("#app-container");
 if (!appContainer) {

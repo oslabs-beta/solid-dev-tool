@@ -1,9 +1,11 @@
 import { Component, createSignal, For, getOwner, Show } from 'solid-js';
 
+
 //sets type for Owner object
 type Owner = NonNullable<ReturnType<typeof getOwner>>;
 
 export default function SignalList(props) {
+  console.log('entering SignalList before content loaded')
   /*
     declare ownerQueue initialized to Owner.owner.owner to get to App/c-1
     declare owners array to store all owners to check for sources to filter for signals. 

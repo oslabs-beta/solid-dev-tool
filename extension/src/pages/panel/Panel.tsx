@@ -1,22 +1,19 @@
 import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
 // import logo from "@assets/img/logo.svg";
 import styles from "./Panel.module.css";
-//import signalist
 
-// grabbing root
-export function DevTool(props) {
-  const [children, root] = createRoot(() => [props.children, getOwner()]);
-  console.log(children());
-  console.log({root});
-  console.log('-----------');
-}
+//import signalist to render signal in our panel
+// import SignalList from './SignalList'
 
 
-
-export function Panel() {
+export default function Panel(props) {
   
   return (
+
     <div class={styles.App}>
+      <button>
+        Get Signals
+      </button>
       <header class={styles.header}>
         {/* <img src={logo} class={styles.logo} alt="logo" /> */}
         <p>
@@ -31,9 +28,12 @@ export function Panel() {
           Testing solid
         </a>
       </header>
-      <SignalList root = {root}>
-
-      </SignalList>
+      {/* <SignalList root = {props.root}/> */}
+ 
     </div>
+
+      
+
+
   );
 };
