@@ -5,13 +5,14 @@ import { Component, createSignal, For, getOwner, Show } from 'solid-js';
 type Owner = NonNullable<ReturnType<typeof getOwner>>;
 
 export default function SignalList(props) {
-  console.log('entering SignalList before content loaded')
+  // console.log('entering SignalList before content loaded')
   /*
     declare ownerQueue initialized to Owner.owner.owner to get to App/c-1
     declare owners array to store all owners to check for sources to filter for signals. 
     declare walked set to keep track of all elements we've seen so we don't perform checks on the same element twice 
   */
-  const ownerQueue: Owner[] = [getOwner().owner.owner];
+  const ownerQueue: Owner[] = [props.root]; // props.root
+  // console.log('getOwner log', getOwner().owner.owner.owner.owner);
   const owners = [];
   const walked = new Set();
   /*
@@ -28,8 +29,7 @@ export default function SignalList(props) {
       }
     }
   }
-  for (let owner in owners) console.log(owners[owner]);
-
+  // for (let owner in owners) console.log(owners[owner]);
   // parsing through owners
   const signals = [];
   let [signalList, setSignalList] = createSignal([]);

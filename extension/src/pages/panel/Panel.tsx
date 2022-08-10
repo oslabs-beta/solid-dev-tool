@@ -3,20 +3,25 @@ import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX,
 import styles from "./Panel.module.css";
 
 //import signalist to render signal in our panel
-// import SignalList from './SignalList'
+import SignalList from './SignalList'
 
 
 export default function Panel(props) {
+  const [clicked, setClicked] = createSignal(false);
   
   return (
 
     <div class={styles.App}>
-      <button>
+      <button onClick={() => setClicked(!clicked())}>
         Get Signals
       </button>
-      <header class={styles.header}>
+      
+      <Show when={clicked()}>
+        <SignalList root={props.root} />
+      </Show>
+      {/* <header class={styles.header}> */}
         {/* <img src={logo} class={styles.logo} alt="logo" /> */}
-        <p>
+        {/* <p>
           Edit <code>src/pages/panel/Panel.tsx</code> and save to reload.
         </p>
         <a
@@ -27,13 +32,7 @@ export default function Panel(props) {
         >
           Testing solid
         </a>
-      </header>
-      {/* <SignalList root = {props.root}/> */}
- 
-    </div>
-
-      
-
-
+      </header> */}
+    </div> 
   );
 };
