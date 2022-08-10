@@ -1,4 +1,4 @@
-import { createRoot, getOwner, onMount } from 'solid-js';
+import { createEffect, createRoot, getOwner, onMount } from 'solid-js';
 import Counter from './Counter';
 import SignalList from './SignalList'
 

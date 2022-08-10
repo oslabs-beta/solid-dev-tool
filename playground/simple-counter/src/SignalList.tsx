@@ -52,7 +52,7 @@ export default function SignalList(props) {
           <div>
             {`signal name: ${el.name}` || 'unknown signal name'}{' '}
             {(() => {
-              if (el.name !== 's9') return `value: ${el.value}`;
+              if (el.name !== 's9') return `value: ${el.value}`;//TODO: can add s9 vals if coerced to string
             })()}
           </div>
           // <div>Root component goes here</div>

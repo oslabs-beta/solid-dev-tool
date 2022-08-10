@@ -12,6 +12,9 @@ export default function Counter() {
     setCount(count() - 1);
   }
 
+  // let runs = 0
+  // makeSolidUpdateListener(() => runs++)
+  // console.log(runs)
   //createEffect(() => console.log('getOwner() createEffect', getOwner()),
   //createEffect(() => console.log('count fn createEffect', createSignal))
 
