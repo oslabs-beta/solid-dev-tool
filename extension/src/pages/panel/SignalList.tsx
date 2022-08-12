@@ -45,16 +45,23 @@ export default function SignalList(props) {
     }
   }
   setSignalList(signals);
-  console.log('signals', signalList());
+  // console.log('signals', signalList());
   return (
     <div>
-      <h1>Signals</h1>
+      <h1>Signals: </h1>
       <For each={signalList()}>
         {(el) => (
           <div>
-            {`signal name: ${el.name}` || 'unknown signal name'}{' '}
             {(() => {
-              if (el.name !== 's9') return `value: ${el.value}`;
+             if (el.value.name !== undefined) {
+              return `signal name: ${el.value.name}()`;
+             } else {
+              return `signal name: ${el.name}`;
+             }
+            })()}
+
+            {(() => {
+              if (el.name !== 's9') return ` value: ${el.value}`
             })()}
           </div>
           // <div>Root component goes here</div>

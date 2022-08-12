@@ -1,8 +1,6 @@
 import { createRoot, getOwner, onMount } from 'solid-js';
 import Counter from './Counter';
 
-
-
 //console.log('getOwner()', getOwner());
 //ALL THE PROPS STUFF SHOULD BE HAPPENING ONE EVEL UP AT DEBUGGER COMPONENT
 function App(props) {
@@ -43,7 +41,6 @@ function App(props) {
     <div class='outerAppDiv'>
       <h1>Solid Test App</h1>
       <Counter />
-      
     </div>
   );
 }

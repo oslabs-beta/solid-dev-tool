@@ -1,38 +1,38 @@
 import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
-// import logo from "@assets/img/logo.svg";
-import styles from "./Panel.module.css";
-
-//import signalist to render signal in our panel
+import { Button } from "@hope-ui/solid";
 import SignalList from './SignalList'
+import { render } from "solid-js/web";
 
 
 export default function Panel(props) {
   const [clicked, setClicked] = createSignal(false);
+  const [initial, setInitial] = createSignal(true);
   
   return (
-
-    <div class={styles.App}>
-      <button onClick={() => setClicked(!clicked())}>
-        Get Signals
-      </button>
-      
-      <Show when={clicked()}>
-        <SignalList root={props.root} />
-      </Show>
-      {/* <header class={styles.header}> */}
-        {/* <img src={logo} class={styles.logo} alt="logo" /> */}
-        {/* <p>
-          Edit <code>src/pages/panel/Panel.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div id='Panel'>
+      <Button 
+        class="signalsButton" 
+        onClick={() => { 
+          if (initial()) {
+            render(<SignalList root={props.root} />, document.getElementById('Panel'))
+            setInitial(false);
+          }
+          if (clicked()) {
+            const panel = document.getElementById('Panel');
+            panel.removeChild(panel.lastChild);
+            
+            render(<SignalList root={props.root} />, document.getElementById('Panel'))
+          }
+          setClicked(true);
+        }}
+        colorScheme="success"
         >
-          Testing solid
-        </a>
-      </header> */}
+        Fetch Signals
+      </Button>
+      
+      {/* <Show when={clicked()}> */}
+        {/* <SignalList root={props.root} /> */}
+      {/* </Show> */}
     </div> 
   );
 };

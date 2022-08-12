@@ -1,6 +1,5 @@
 import { ParentComponent, Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
-import  Panel  from './Panel'
-
+import  Panel  from './Panel';
 
 // accessing the entry point of the App
 export const DevTool: ParentComponent = props => {
@@ -9,7 +8,7 @@ export const DevTool: ParentComponent = props => {
     <div>
       {children}
       {/* passing root to Panel so that Signal List will have access */}
-      <Panel root = {root} /> 
+        <Panel root = {root} />
     </div>
   )
 }

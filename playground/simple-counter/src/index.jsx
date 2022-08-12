@@ -3,11 +3,12 @@ import { render } from 'solid-js/web';
 import './index.css';
 import App from './App';
 import { DevTool } from '../../../extension/src/pages/panel/Root'
-
-// import debugger from extension/panel folder
+import { HopeProvider } from '@hope-ui/solid';
 
 render(() => (
-  <DevTool>
-    <App />
-  </DevTool>  
+  <HopeProvider>
+    <DevTool>
+      <App />
+    </DevTool>  
+  </HopeProvider>
 ), document.getElementById('root'));
