@@ -1,4 +1,5 @@
 import { Component, createSignal, For, getOwner, Show } from 'solid-js';
+import count from './Counter';
 
 //sets type for Owner object
 type Owner = NonNullable<ReturnType<typeof getOwner>>;
@@ -53,6 +54,7 @@ export default function SignalList(props) {
             {`signal name: ${el.name}` || 'unknown signal name'}{' '}
             {(() => {
               if (el.name !== 's9') return `value: ${el.value}`;//TODO: can add s9 vals if coerced to string
+              //if (el.name !== 's9') return `value: ${count()}`;//TODO: can add s9 vals if coerced to string
             })()}
           </div>
           // <div>Root component goes here</div>
