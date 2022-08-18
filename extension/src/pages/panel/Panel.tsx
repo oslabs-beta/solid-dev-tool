@@ -1,5 +1,4 @@
 import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
-import { Button } from "@hope-ui/solid";
 import SignalList from './SignalList'
 import { render } from "solid-js/web";
 
@@ -10,8 +9,8 @@ export default function Panel(props) {
   
   return (
     <div id='Panel'>
-      <Button 
-        class="signalsButton" 
+      <button 
+        id="signalsButton" 
         onClick={() => { 
           if (initial()) {
             render(<SignalList root={props.root} />, document.getElementById('Panel'))
@@ -25,10 +24,9 @@ export default function Panel(props) {
           }
           setClicked(true);
         }}
-        colorScheme="success"
         >
         Fetch Signals
-      </Button>
+      </button>
       
       {/* <Show when={clicked()}> */}
         {/* <SignalList root={props.root} /> */}
