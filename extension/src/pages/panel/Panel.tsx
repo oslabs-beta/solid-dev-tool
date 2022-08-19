@@ -13,7 +13,7 @@ export default function Panel(props) {
         id="signalsButton" 
         onClick={() => { 
           if (initial()) {
-            render(<SignalList root={props.root} />, document.getElementById('Panel'))
+            render(() => <SignalList root={props.root} />, document.getElementById('Panel'))
             setInitial(false);
           }
           if (clicked()) {
@@ -28,9 +28,9 @@ export default function Panel(props) {
         Fetch Signals
       </button>
       
-      {/* <Show when={clicked()}> */}
-        {/* <SignalList root={props.root} /> */}
-      {/* </Show> */}
+      {/* <Show when={clicked()}> 
+        <SignalList root={props.root} />
+      </Show> */}
     </div> 
   );
 };
