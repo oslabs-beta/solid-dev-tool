@@ -1,4 +1,5 @@
 import { render } from "solid-js/web";
+import  { createRoot, getOwner }  from "solid-js";
 import "./index.css";
 import  Panel  from "./Panel";
 
@@ -7,4 +8,11 @@ if (!appContainer) {
   throw new Error("Can not find AppContainer");
 }
 
-render(Panel, appContainer);
+
+render(() => <Panel/>, appContainer);
+
+
+
+
+
+

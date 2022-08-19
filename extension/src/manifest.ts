@@ -15,9 +15,9 @@ const manifest: ManifestType = {
   chrome_url_overrides: {
     newtab: "src/pages/newtab/index.html",
   },
-  icons: {
-    "128": "icons/128x128.png",
-  },
+  // icons: {
+  //   "128": "icons/128x128.png",
+  // },
   content_scripts: [
     {
       matches: ["http://*/*", "https://*/*", "<all_urls>"],
@@ -32,6 +32,9 @@ const manifest: ManifestType = {
       matches: ["*://*/*"],
     },
   ],
+  permissions: [
+    "tabs", "<all_urls>"
+  ]
 };
 
 export default manifest;
