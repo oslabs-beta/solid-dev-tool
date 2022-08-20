@@ -1,5 +1,4 @@
 import { createSignal } from 'solid-js';
-import { Button, ButtonGroup } from "@hope-ui/solid";
 
 export default function Counter() {
   const [count, setCount] = createSignal(0);

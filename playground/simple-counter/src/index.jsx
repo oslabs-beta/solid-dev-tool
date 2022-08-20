@@ -2,7 +2,7 @@
 import { render } from 'solid-js/web';
 import './index.css';
 import App from './App';
-import { DevTool } from '../../../extension/src/pages/panel/Root'
+import { DevTool } from '../../../solid-dev-tool/src/Root'
 
 render(() => (
     <DevTool>
