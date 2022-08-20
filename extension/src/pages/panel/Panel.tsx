@@ -1,25 +1,36 @@
-import logo from "@assets/img/logo.svg";
-import styles from "./Panel.module.css";
+import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
+import SignalList from './SignalList'
+import { render } from "solid-js/web";
 
-const Panel = () => {
+
+export default function Panel(props) {
+  const [clicked, setClicked] = createSignal(false);
+  const [initial, setInitial] = createSignal(true);
+  
   return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <p>
-          Edit <code>src/pages/panel/Panel.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div id='Panel'>
+      <button 
+        id="signalsButton" 
+        onClick={() => { 
+          if (initial()) {
+            render(<SignalList root={props.root} />, document.getElementById('Panel'))
+            setInitial(false);
+          }
+          if (clicked()) {
+            const panel = document.getElementById('Panel');
+            panel.removeChild(panel.lastChild);
+            
+            render(<SignalList root={props.root} />, document.getElementById('Panel'))
+          }
+          setClicked(true);
+        }}
         >
-          Learn Solid
-        </a>
-      </header>
-    </div>
+        Fetch Signals
+      </button>
+      
+      {/* <Show when={clicked()}> */}
+        {/* <SignalList root={props.root} /> */}
+      {/* </Show> */}
+    </div> 
   );
 };
-
-export default Panel;

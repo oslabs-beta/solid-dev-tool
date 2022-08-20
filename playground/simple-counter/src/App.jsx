@@ -1,14 +1,11 @@
 import { createRoot, getOwner, onMount } from 'solid-js';
 import Counter from './Counter';
-import SignalList from './SignalList'
-
-
 
 //console.log('getOwner()', getOwner());
 //ALL THE PROPS STUFF SHOULD BE HAPPENING ONE EVEL UP AT DEBUGGER COMPONENT
 function App(props) {
-  const [children, root] = createRoot(() => [props.children, getOwner()]);
-  console.log('root', root)
+  // const [children, root] = createRoot(() => [props.children, getOwner()]);
+  // console.log('root', root)
   //console.log('getOwner() inside App', getOwner());
   //console.log('log owner', getOwner().owned);
   // const ownerObj = getOwner()
@@ -44,7 +41,6 @@ function App(props) {
     <div class='outerAppDiv'>
       <h1>Solid Test App</h1>
       <Counter />
-      <SignalList root={root} />
     </div>
   );
 }
