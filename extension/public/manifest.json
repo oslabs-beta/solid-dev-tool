@@ -2,6 +2,14 @@
   "manifest_version": 3,
   "name": "Solid Chrome Extension Template",
   "version": "0.0.1",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
   "description": "Auto synchronize with manifest",
   "options_page": "src/pages/options/index.html",
   "background": {
@@ -13,9 +21,6 @@
   },
   "chrome_url_overrides": {
     "newtab": "src/pages/newtab/index.html"
-  },
-  "icons": {
-    "128": "icons/128x128.png"
   },
   "content_scripts": [
     {
@@ -38,11 +43,24 @@
       "resources": [
         "assets/js/*.js",
         "assets/css/*.css",
-        "assets/img/*"
+        "assets/img/*",
+        "pages/content/index-exec.js",
+        "pages/proxy.js"
       ],
       "matches": [
         "*://*/*"
-      ]
+      ],
+      "extension_ids": []
+    },
+    {
+      "resources": [
+        "pages/content/index-exec.js",
+        "pages/proxy.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
     }
   ]
 }

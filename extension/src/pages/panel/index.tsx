@@ -13,21 +13,21 @@ if (!appContainer) {
 
 render(() => <Panel />, appContainer);
 
-function handleError(error) {
-  if (error.isError) {
-    console.log(`Devtools error: ${error.code}`);
-  } else {
-    console.log(`JavaScript error: ${error.value}`);
-  }
-}
+// function handleError(error) {
+//   if (error.isError) {
+//     console.log(`Devtools error: ${error.code}`);
+//   } else {
+//     console.log(`JavaScript error: ${error.value}`);
+//   }
+// }
 
-function handleResult(result) { 
-  if (result[1]) {
-    handleError(result[1]);
-  }
-}
+// function handleResult(result) { 
+//   if (result[1]) {
+//     handleError(result[1]);
+//   }
+// }
 
-const inspectString = "inspect(document.querySelector('#root'))";
-document.querySelector("#signalsButton").addEventListener("click", () => {
-  chrome.devtools.inspectedWindow.eval(inspectString).then(handleResult)
-});
+// const inspectString = "inspect(document.querySelector('#root'))";
+// document.querySelector("#signalsButton").addEventListener("click", () => {
+//   chrome.devtools.inspectedWindow.eval(inspectString).then(handleResult)
+// });
