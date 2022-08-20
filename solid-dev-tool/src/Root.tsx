@@ -7,8 +7,7 @@ export const DevTool: ParentComponent = props => {
   return (
     <div>
       {children}
-      {/* passing root to Panel so that Signal List will have access */}
-        {/* <Panel root = {root} /> */}
+        {<Panel root = {root} />}
     </div>
   )
 }
