@@ -1,16 +1,20 @@
 import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
-import SignalList from './SignalList'
 import { render } from "solid-js/web";
+import { Fab } from "./Fab"
+
+
+
 
 
 export default function Panel(props) {
-  const [clicked, setClicked] = createSignal(false);
-  const [initial, setInitial] = createSignal(true);
+  // const [clicked, setClicked] = createSignal(false);
+  // const [initial, setInitial] = createSignal(true);
+
   
   return (
-    <div id='Panel'>
-      <button 
-        id="signalsButton" 
+    <div id='button'>
+       <Fab alwaysShowTitle={true} icon='solid' root = {props.root} />
+        {/* id="signalsButton" 
         onClick={() => { 
           if (initial()) {
             render(<SignalList root={props.root} />, document.getElementById('Panel'))
@@ -23,14 +27,7 @@ export default function Panel(props) {
             render(<SignalList root={props.root} />, document.getElementById('Panel'))
           }
           setClicked(true);
-        }}
-        >
-        Fetch Signals
-      </button>
-      
-      {/* <Show when={clicked()}> */}
-        {/* <SignalList root={props.root} /> */}
-      {/* </Show> */}
+        }} */}
     </div> 
   );
 };
