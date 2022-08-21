@@ -11,9 +11,13 @@ export default function SignalList(props) {
     declare owners array to store all owners to check for sources to filter for signals. 
     declare walked set to keep track of all elements we've seen so we don't perform checks on the same element twice 
   */
-  const ownerQueue: Owner[] = [props.root]; // props.root
-  // console.log('getOwner log', getOwner().owner.owner.owner.owner);
+  const ownerQueue: Owner[] = [props.root.owned[0]]; // props.root
+  console.log('top level owner is:', props.root);
   const owners = [];
+  const tree = {
+        name:'root',
+        children:[]
+      };
   const walked = new Set();
   /*
     grabbing everything in the componenet hierarchy. Finding all owners by looping 
@@ -33,7 +37,8 @@ export default function SignalList(props) {
   // parsing through owners
   const signals = [];
   let [signalList, setSignalList] = createSignal([]);
-
+  console.log('list of owners is:');
+  owners.forEach((owner) => console.log(owner))
   while (owners.length) {
     const currentOwner = owners.shift();
     if (currentOwner.sources) {

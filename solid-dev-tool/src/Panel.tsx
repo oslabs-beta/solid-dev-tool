@@ -6,7 +6,6 @@ import { render } from "solid-js/web";
 export default function Panel(props) {
   const [clicked, setClicked] = createSignal(false);
   const [initial, setInitial] = createSignal(true);
-  
   return (
     <div id='Panel'>
       <button 
