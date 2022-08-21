@@ -2,6 +2,7 @@
   "dependencies": {
     "@hope-ui/solid": "^0.6.7",
     "@stitches/core": "^1.2.8",
+    "sass": "^1.54.5",
     "solid-transition-group": "^0.0.10"
   }
 }
