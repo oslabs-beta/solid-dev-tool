@@ -37,7 +37,7 @@ export default function SignalList(props) {
     //console.log('currentOwner.name', currentOwner.name)
 
     // This is the initial run, we don't need to do a look up. This is our top level node.
-    console.log({tree})
+  
     if(Object.keys(tree).length === 0) {
       tree.name = currentOwner.name; 
       tree.children = [];// an array of node objects that also have name + children
@@ -53,24 +53,24 @@ export default function SignalList(props) {
       }
     */
     const childrensQueue = [...tree.children]; 
-    console.log('This is childrens Queue before entering the while loop', childrensQueue);
+    // console.log('This is childrens Queue before entering the while loop', childrensQueue);
     while(childrensQueue.length) {
       const currentChild = childrensQueue.shift();
-      console.log({currentChild});
+      // console.log({currentChild});
       // we found the treeNode related to currentOwner
       if(currentChild.name === currentOwner.name) {
         currentTreeNode = currentChild; 
-        console.log('we found the currentChild!!!')
+        // console.log('we found the currentChild!!!')
         break; 
       }
       // this isnt the treeNode we want, but the treeNode we want might be nested deeper
       currentChild.children.forEach((child) => childrensQueue.push(child)); 
-      console.log('This is childrens Queue after entering the while loop', childrensQueue);
+      // console.log('This is childrens Queue after entering the while loop', childrensQueue);
     }
 
 
 
-    console.log('tree.children', tree.children) 
+    // console.log('tree.children', tree.children) 
     owners.push(currentOwner);
     walked.add(currentOwner);
     if (currentOwner.owned) {
@@ -80,11 +80,10 @@ export default function SignalList(props) {
           name: currentOwner.owned[i].name,
           children: [] 
         });
-        console.log('tree.children in if', tree.children)
       }
     }
   }
-  console.log('tree', tree)
+  // console.log('tree', tree)
 
 
   for (let owner in owners) {
@@ -105,7 +104,7 @@ export default function SignalList(props) {
     }
   }
   setSignalList([...signals]);
-  console.log('signals', signalList());
+  // console.log('signals', signalList());
   return (
     <div>
       <h1>Signals</h1>
