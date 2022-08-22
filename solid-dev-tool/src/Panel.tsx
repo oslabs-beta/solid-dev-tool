@@ -7,6 +7,10 @@ import { render } from "solid-js/web";
 export default function Panel(props) {
   const [clicked, setClicked] = createSignal(false);
   const [initial, setInitial] = createSignal(true);
+  const [graphData, setGraphData] = createSignal(); 
+
+
+
   return (
     <div id='Panel'>
       <button 
@@ -27,8 +31,8 @@ export default function Panel(props) {
             //     <Graph />
             //   </div>
             // }, document.getElementById('Panel'))
-            // render(() => <SignalList root={props.root} />, document.getElementById('Panel'))
-            render(() => <Graph/>, document.getElementById('Panel'));
+            render(() => <SignalList root={props.root} setGraphData={setGraphData}/>, document.getElementById('Panel'))
+            render(() => <Graph graphData={graphData()}/>, document.getElementById('Panel'));
           }
           setClicked(true);
         }}

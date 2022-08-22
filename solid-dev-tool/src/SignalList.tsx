@@ -15,7 +15,7 @@ export default function SignalList(props) {
   const owners = [];
   const walked = new Set();
   const tree = {};
-
+  
   /*
     grabbing everything in the componenet hierarchy. Finding all owners by looping 
     through owned (owner's children, which themselves can be owners if they have children) 
@@ -84,6 +84,7 @@ export default function SignalList(props) {
     }
   }
   // console.log('tree', tree)
+  props.setGraphData(tree);
 
 
   for (let owner in owners) {
