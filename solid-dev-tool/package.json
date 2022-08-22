@@ -1,0 +1,25 @@
+{
+  "name": "solid-dev-tool",
+  "version": "1.0.0",
+  "description": "In-browser SolidJS debugger and visualizer",
+  "main": "./src/Root.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/solid-dev-tools.git"
+  },
+  "author": "Candace M., Stanley C., Lyam H., Hulkaroy J.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/solid-dev-tools/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/solid-dev-tools#readme",
+  "dependencies": {
+    "solid-bottomsheet": "^1.1.0"
+  },
+  "devDependencies": {
+    "sass": "^1.54.5"
+  }
+}

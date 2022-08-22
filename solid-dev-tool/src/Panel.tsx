@@ -1,33 +1,31 @@
 import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
 import { render } from "solid-js/web";
-import { Fab } from "./Fab"
-
-
-
-
+import "solid-bottomsheet/styles.css";
+import { SolidBottomsheet } from 'solid-bottomsheet';
+import SignalList from "./SignalList";
 
 export default function Panel(props) {
-  // const [clicked, setClicked] = createSignal(false);
-  // const [initial, setInitial] = createSignal(true);
+  const [clicked, setClicked] = createSignal(false);
+  const [isOpen, setOpen] = createSignal(false);
+  // const [isResizing, setResizing] = createSignal(false);
+  // const [lastDownX, setLastDownX] = createSignal(0);
+  // const [newWidth, setNewWidth] = createSignal({});
 
-  
+  onMount(() => setOpen(true));
+
   return (
-    <div id='button'>
-       <Fab alwaysShowTitle={true} icon='solid' root = {props.root} />
-        {/* id="signalsButton" 
-        onClick={() => { 
-          if (initial()) {
-            render(<SignalList root={props.root} />, document.getElementById('Panel'))
-            setInitial(false);
-          }
-          if (clicked()) {
-            const panel = document.getElementById('Panel');
-            panel.removeChild(panel.lastChild);
-            
-            render(<SignalList root={props.root} />, document.getElementById('Panel'))
-          }
-          setClicked(true);
-        }} */}
+    <div id='Panel'>
+      {isOpen() && (
+        <SolidBottomsheet
+          variant="snap"
+          defaultSnapPoint={({ maxHeight }) => maxHeight / 3}
+          snapPoints={({ maxHeight }) => [maxHeight, maxHeight / 4]}
+          onClose={() => setOpen(!isOpen())}
+          // className="drawer"
+        >
+            <SignalList root={props.root} />
+        </SolidBottomsheet>
+      )}
     </div> 
   );
 };
