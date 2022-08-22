@@ -2,7 +2,7 @@ import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX,
 import SignalList from './SignalList'
 import { render } from "solid-js/web";
 
-
+/* Equivalent to the panel that shows up?? */
 export default function Panel(props) {
   const [clicked, setClicked] = createSignal(false);
   const [initial, setInitial] = createSignal(true);
@@ -20,6 +20,7 @@ export default function Panel(props) {
             panel.removeChild(panel.lastChild);
             
             render(<SignalList root={props.root} />, document.getElementById('Panel'))
+
           }
           setClicked(true);
         }}
