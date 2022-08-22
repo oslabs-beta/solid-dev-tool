@@ -1,6 +1,6 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import './index.css';
+import './index.sass';
 import App from './App';
 import { DevTool } from '../../../solid-dev-tool/src/Root'
 
