@@ -1,5 +1,6 @@
 import { ParentComponent, createRoot, getOwner} from "solid-js"
-import  Panel  from './Panel';
+import { Fab } from "./Fab"
+import './styles.sass';
 
 // accessing the top level component of the application
 // passing it to the Panel component
@@ -8,7 +9,7 @@ export const DevTool: ParentComponent = props => {
   return (
     <div>
       {children}
-        {<Panel root = {root} />}
+      {<Fab alwaysShowTitle={true} icon='solid' root = {root} />}
     </div>
   )
 }
