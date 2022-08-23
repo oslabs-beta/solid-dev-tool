@@ -113,7 +113,7 @@ const Fab: Component<FabProps> = ({
         </li>
       </ul>
       <Show when={isAcClicked()}>
-          <Panel root={root} />
+          <Panel root={root}  setIsAcClicked={setIsAcClicked} isAcClicked={isAcClicked} />
       </Show>
     </>
   );
