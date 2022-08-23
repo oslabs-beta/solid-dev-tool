@@ -7,9 +7,11 @@ import './styles.sass';
 export const DevTool: ParentComponent = props => {
   const [children, root] = createRoot(() => [props.children, getOwner()]);
   return (
+    <>
     <div>
       {children}
-      {<Fab alwaysShowTitle={true} icon='solid' root = {root} />}
     </div>
+      <Fab alwaysShowTitle={true} icon='solid' root = {root} />
+    </>
   )
 }

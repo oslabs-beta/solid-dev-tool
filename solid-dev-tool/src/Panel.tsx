@@ -14,7 +14,13 @@ export default function Panel(props) {
           variant="snap"
           defaultSnapPoint={({ maxHeight }) => maxHeight / 3}
           snapPoints={({ maxHeight }) => [maxHeight, maxHeight / 4]}
-          onClose={() => setOpen(!isOpen())}
+          onClose={
+            () => {
+              setOpen(!isOpen());
+              props.setIsAbClicked(!props.isAbClicked());
+            }
+          
+          }
         >
             <SignalList root={props.root} />
         </SolidBottomsheet>
