@@ -26,7 +26,7 @@ export const AB: Component<ABProps> = ({ children, ...p }) => (
 );
 
 // location of main button
-let defaultStyles: JSX.CSSProperties = { left: 50 +'px', bottom: 250 +'px' };
+let defaultStyles: JSX.CSSProperties = { left: 50 +'px', bottom: 400 +'px' };
 
 
 //types floating action button added any to those that directly translate to Solid
