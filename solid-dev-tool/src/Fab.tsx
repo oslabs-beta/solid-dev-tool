@@ -13,8 +13,21 @@ export const MB: Component<MBProps> = p => (
   </button>
 );
 
+//types defined for action button
+interface ABProps extends JSX.HTMLAttributes<HTMLButtonElement>{
+  text?: string;
+}
+
+// Action button defined
+export const AB: Component<ABProps> = ({ children, ...p }) => (
+  <button type="button" className="stf--ab" {...p}>
+    {children}
+  </button>
+);
+
 // location of main button
-const defaultStyles: JSX.CSSProperties =  { bottom: 24, right: 24 };
+let defaultStyles: JSX.CSSProperties = { left: 50 +'px', bottom: 250 +'px' };
+
 
 //types floating action button added any to those that directly translate to Solid
 interface FabProps {
@@ -29,14 +42,7 @@ interface FabProps {
   root?: Owner;
 }
 
-
 // Defining the Floating Action Button
-/**
- * 
- * @param event - event that will happen
- * @param style - location of main button on screen, could be updated here for location
- * @param alwaysShowTitle - whether or not to show main button 
- */
 const Fab: Component<FabProps> = ({
   event = "hover",
   style = defaultStyles,
@@ -48,7 +54,7 @@ const Fab: Component<FabProps> = ({
 
   //creating a signal to keep track of main button and action button
   const [isOpen, setIsOpen] = createSignal(false);
-  const [isAcClicked, setIsAcClicked] = createSignal(false);
+  const [isAbClicked, setIsAbClicked] = createSignal(false);
 
   // defining functions that impact the status of isOpen
   const open = () => setIsOpen(true);
@@ -59,63 +65,67 @@ const Fab: Component<FabProps> = ({
   const leave = () => event === "hover" && close();
   const toggle = () => (event === "click" ? (isOpen() ? close() : open()) : null);
 
+  const ariaHidden = alwaysShowTitle || !isOpen();
 
-  // what happens after you click an action
   const actionOnClick = () => {
-    console.log('props in actionOnClick in Fab.tsx file:');
-    
-    setIsAcClicked(!isAcClicked());
-    console.log('isAcClicked value', isAcClicked())
+    setIsAbClicked(!isAbClicked());
+    console.log('isAbClicked insided ActionOnClick', isAbClicked())
     setIsOpen(false);
   };
 
-  const ariaHidden = alwaysShowTitle || !isOpen();
+
+  // Configuring button
+  const FabConfig: Component = () => {
+    return (
+      <ul 
+      onMouseEnter={enter}
+      onMouseLeave={leave}
+      className={`stf ${isOpen() ? "open" : "closed"}`}
+      data-testid="fab"
+      style = {style}
+      draggable = {true}
+    >
+      <li className="stf--mb__c">
+        <MB
+          onClick={toggle}
+          style={mainButtonStyles}
+          data-testid="main-button"
+          role="button"
+          aria-label="Floating menu"
+          tabIndex= {0}
+        >
+          {icon}
+        </MB>
+        <ul>
+          <li className={`stf--ab__c ${"top" in style ? "top" : ''}`}>
+            <AB
+              text = "Debugger"
+              data-testid =  "action-button-0"
+              aria-label = "Debugger"
+              aria-hidden = {ariaHidden}
+              onClick = {actionOnClick}>
+              Tool
+            </AB>
+            <span className={`${"right" in style ? "right" : ""} ${
+              alwaysShowTitle ? "always-show" : ""}`}
+              aria-hidden={ariaHidden}>
+                Debugger
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    );
+  };
+
 
   return (
-    <>
-      <ul
-        onMouseEnter={enter}
-        onMouseLeave={leave}
-        className={`stf ${isOpen() ? "open" : "closed"}`}
-        data-testid="fab"
-        style = {style}
-      >
-        <li className="stf--mb__c">
-          <MB
-            onClick={toggle}
-            style={mainButtonStyles}
-            data-testid="main-button"
-            role="button"
-            aria-label="Floating menu"
-            tabIndex= {0}
-          >
-            {icon}
-          </MB>
-          <ul>
-            <li className={`stf--ab__c ${"top" in style ? "top" : ''}`}>
-              <button
-                type = "button"
-                text = "Debugger"
-                data-testid =  "action-button-0"
-                aria-label = "Debugger"
-                aria-hidden = {ariaHidden}
-                class="stf--ab"
-                onClick = {actionOnClick}>
-                Tool
-              </button>
-              <span className={`${"right" in style ? "right" : ""} ${
-                alwaysShowTitle ? "always-show" : ""}`}
-                aria-hidden={ariaHidden}>
-                  Debugger
-              </span>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <Show when={isAcClicked()}>
-          <Panel root={root} />
+    <div >
+      <FabConfig/>
+      <Show when={isAbClicked()}>
+          <Panel root={root} setIsAbClicked={setIsAbClicked}  isAbClicked={isAbClicked}/>
       </Show>
-    </>
+    </div>   
   );
 };
 
