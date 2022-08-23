@@ -71,7 +71,7 @@ export const SolidBottomsheet: Component<SolidBottomsheetProps> = (props) => {
 
   onCleanup(() => {
     document.body.classList.remove("sb-overflow-hidden");
-    window.visualViewport.removeEventListener("resize", onViewportChange);
+    //window.visualViewport.removeEventListener("resize", onViewportChange);
   });
 
   createEffect(() => {
@@ -160,6 +160,7 @@ export const SolidBottomsheet: Component<SolidBottomsheetProps> = (props) => {
     }
   };
 
+  // removed this onClick so drawer doesnt close when clicking outside of it added to div class = sbOverlay
   const onOverlayClick: JSX.EventHandlerUnion<HTMLDivElement, MouseEvent> = (
     event
   ) => {
@@ -168,9 +169,10 @@ export const SolidBottomsheet: Component<SolidBottomsheetProps> = (props) => {
     }
   };
 
+  // this probably handles resizing the window
   const handleMouseDown = (e) => {
     const content = document.querySelector(".sb-content");
-
+    console.log(e.target);
     const md = {
       e,
       offsetLeft: e.target.offsetLeft,
@@ -184,8 +186,8 @@ export const SolidBottomsheet: Component<SolidBottomsheetProps> = (props) => {
         y: e.clientY - md.e.clientY
       };
 
-      e.target.style.top = md.offsetTop + delta.x + "px";
-      content.style.height = (md.contentHeight + delta.x) + "px";
+      e.target.style.top = md.offsetTop - delta.y + "px";
+      content.style.height = (md.contentHeight - delta.y) + "px";
     }
 
     window.onmousemove = handleMouseMove
@@ -194,8 +196,9 @@ export const SolidBottomsheet: Component<SolidBottomsheetProps> = (props) => {
 
   return (
     <Portal>
-      <div class="sb-overlay" onClick={onOverlayClick}>
+      <div class="sb-overlay">
         <div
+          id='debugger-display'
           classList={{
             "sb-content": true,
             "sb-is-closing": isClosing(),
@@ -209,10 +212,10 @@ export const SolidBottomsheet: Component<SolidBottomsheetProps> = (props) => {
         >
           <div
             class="sb-handle-container"
-            // onTouchStart={onTouchStart}
-            // onTouchMove={onTouchMove}
-            // onTouchEnd={onTouchEnd}
-            onmousedown={handleMouseDown}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            //onmousedown={handleMouseDown}
           >
             <div class="sb-handle" />
           </div>

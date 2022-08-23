@@ -163,27 +163,21 @@ export default function Panel(props) {
   walker();
 
   function renderPanel(signalList, graphData){
-    console.log('this is rerun');
-    if (initial()) {
-      render(() => <SignalList signalList={signalList}/>, document.getElementById('Panel'))
-      render(() => <Graph graphData={graphData}/>, document.getElementById('Panel'));
-      setInitial(false);
-    }
-    if (clicked()) {
-      const panel = document.getElementById('Panel');
-      panel.removeChild(panel.lastChild);
-      panel.removeChild(panel.lastChild);
+    console.log('this is rerunning to rerender the info');
+    const display = document.getElementById('debugger-display');
+    display.removeChild(display.lastChild);
+    display.removeChild(display.lastChild);
 
-      render(() => <SignalList signalList={signalList}/>, document.getElementById('Panel'))
-      render(() => <Graph graphData={graphData}/>, document.getElementById('Panel'));
-    }
-    setClicked(true);
+    render(() => <SignalList signalList={signalList}/>, document.getElementById('debugger-Panel'))
+    render(() => <Graph graphData={graphData}/>, document.getElementById('graph'));
+    
+    
   }
   
   return (
     <div id='Panel'>
   
-        {isOpen() && (
+        {/* {isOpen() && (
         <SolidBottomsheet
           variant="snap"
           defaultSnapPoint={({ maxHeight }) => maxHeight / 3}
@@ -193,15 +187,24 @@ export default function Panel(props) {
               setOpen(!isOpen());
               props.setIsAbClicked(!props.isAbClicked());
             }
-          
           }
-        >
-            <SignalList root={props.root} />
-        </SolidBottomsheet>
+        > */}
+        {/* <Show when={isOpen()}> */}
+          <div id="mainDisplay">
+            <div id="signalsDisplay">
+            <SignalList signalList={signalList()}/>
+            </div>
+            <div id="graphsContainer">
+              <div id="structGraphDisplay">
+              <Graph graphData={graphData()}/>
+              </div>
+              <div id="depGraphDisplay">
+              </div>  
+            </div>
+          </div>
+        {/* </Show> */}
+        {/* </SolidBottomsheet> */}
       )}
-      <button id="signalsButton" onClick={() =>  renderPanel(signalList(), graphData())}>
-        Fetch Signals
-      </button>
     </div> 
   );
 };
