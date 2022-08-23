@@ -1,7 +1,5 @@
 import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
-import { render } from "solid-js/web";
-import "solid-bottomsheet/styles.css";
-import { SolidBottomsheet } from 'solid-bottomsheet';
+import { SolidBottomsheet } from './SolidDrawer';
 import SignalList from "./SignalList";
 
 export default function Panel(props) {
