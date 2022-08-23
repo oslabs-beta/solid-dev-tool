@@ -1,70 +1,57 @@
 import { Component, createSignal, For, getOwner, Show } from 'solid-js';
+import Graph from './Graph'
+import { render } from "solid-js/web";
+//TODO: signalList
 
+function createSignalGraphButton(signal) {
+  /*
+    loops through the signals observers and forEach add a treeNode 
+    that becomes the children of our signal treeNode
+  */
+  const observers = []
+  signal.observers.forEach((obs) => {
+    observers.push({name: obs.name, children: []});
+  })
+  
+  /*
+    creating our dependency graph. Name is signalName, children is array of observers
+  */
+  const graphData = {
+    name: `signal name: ${signal.name}` || 'unknown signal name',
+    children: observers
+  }
+  console.log({graphData});
 
-//sets type for Owner object
-type Owner = NonNullable<ReturnType<typeof getOwner>>;
+  /*
+    returns a button that when click shows the graph 
+    TODO: Need a separate view in our main panel to show dependency graphs
+          when you click a signal it overwrites whatever dependency graph that
+          was already rendered in that view.
+  */
+  return (
+    <button onClick={() => {
+      render(() => <Graph graphData={graphData}/>, document.getElementById('Panel'));
+    }} >
+      show dependencies
+    </button>
+  );
+}
+
 
 export default function SignalList(props) {
-  // console.log('entering SignalList before content loaded')
-  /*
-    declare ownerQueue initialized to Owner.owner.owner to get to App/c-1
-    declare owners array to store all owners to check for sources to filter for signals. 
-    declare walked set to keep track of all elements we've seen so we don't perform checks on the same element twice 
-  */
-  const ownerQueue: Owner[] = [props.root]; // props.root
-  // console.log('getOwner log', getOwner().owner.owner.owner.owner);
-  const owners = [];
-  const walked = new Set();
-  /*
-    grabbing everything in the componenet hierarchy. Finding all owners by looping 
-    through owned (owner's children, which themselves can be owners if they have children) 
-  */
-  while (ownerQueue.length) {
-    const currentOwner = ownerQueue.shift();
-    owners.push(currentOwner);
-    walked.add(currentOwner);
-    if (currentOwner.owned) {
-      for (let i = 0; i < currentOwner.owned.length; i++) {
-        ownerQueue.push(currentOwner.owned[i]);
-      }
-    }
-  }
-  // for (let owner in owners) console.log(owners[owner]);
-  // parsing through owners
-  const signals = [];
-  let [signalList, setSignalList] = createSignal([]);
-
-  while (owners.length) {
-    const currentOwner = owners.shift();
-    if (currentOwner.sources) {
-      for (let i = 0; i < currentOwner.sources.length; i++) {
-        // signals do not have owner
-        if (!currentOwner.sources[i].owner)
-          signals.push(currentOwner.sources[i]);
-      }
-    }
-  }
-  setSignalList(signals);
-  // console.log('signals', signalList());
+  console.log('signalList passed down from Panel', props.signalList);
   return (
     <div>
-      <h1>Signals: </h1>
-      <For each={signalList()}>
+      <h1>Signals</h1>
+      <For each={props.signalList}>
         {(el) => (
           <div>
+            {`signal name: ${el.name}` || 'unknown signal name'}{' '}
             {(() => {
-             if (el.value.name !== undefined) {
-              return `signal name: ${el.value.name}()`;
-             } else {
-              return `signal name: ${el.name}`;
-             }
+              if (el.name !== 's9') return `value: ${el.value}`;
             })()}
-
-            {(() => {
-              if (el.name !== 's9') return ` value: ${el.value}`
-            })()}
+            {createSignalGraphButton(el)}
           </div>
-          // <div>Root component goes here</div>
         )}
       </For>
     </div>

@@ -6,11 +6,15 @@ import './styles.sass';
 // passing it to the Panel component
 export const DevTool: ParentComponent = props => {
   const [children, root] = createRoot(() => [props.children, getOwner()]);
+  
+
+  // Stanley's Note: This renders {Children} which should be the app that you are debugging
+  // Why doesn't this render two apps...?
   return (
     <>
-    <div>
-      {children}
-    </div>
+      <div id="debugger">
+        {children}
+      </div>
       <Fab alwaysShowTitle={true} icon='solid' root = {root} />
     </>
   )
