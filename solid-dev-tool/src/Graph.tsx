@@ -11,7 +11,7 @@ export default function Graph(props) {
   let svg;
   onMount(() => {
     console.log('test');
-    const newSvg = select(svg);
+    const newSvg = select(svg); 
     const width = document.body.clientWidth;
     const height = document.body.clientHeight;
     const margin = { top: 100, right: 100, bottom: 100, left: 100 };
@@ -20,60 +20,52 @@ export default function Graph(props) {
 
     const treeLayout = tree().size([innerHeight, innerWidth]);
     
+
+    /*
+      Reference: https://observablehq.com/@d3/zoom
+      TODO:
+        1. Resize svg to fit inside div
+        2. Reduce the length of paths
+        3. Style the graph to make it more clear
+        4. onhover show more information? 
+    */
     const g = newSvg
       .attr('width', width)
       .attr('height', height)
       .append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-    function handleZoom(e) {
-      select('newSvg')
-        .attr('transform', e.transform);
-    }
-      
-    const graphZoom = zoom()
-      .on('zoom', handleZoom);
-
-    select('newSvg')
-      .call(zoom);
+    const handleZoom = (e) => g.attr('transform', e.transform);
+    newSvg.call(zoom().on('zoom', handleZoom));
 
     const root = hierarchy(graphData);
     const links = treeLayout(root).links();
     const linkPathGenerator = linkHorizontal()
       .x((d) => d.y)
       .y((d) => d.x);
-
-    g
-      .selectAll('path')
+    g.selectAll('path')
       .data(links)
       .enter()
       .append('path')
       .attr('d', linkPathGenerator); 
 
-    
-    const node = g
-      .selectAll('.node').data(root.descendants())
+    //TODO: style text in relation to nodes
+    const node = g.selectAll('.node').data(root.descendants())
       .enter().append('g')
-        .attr('class', function(d) { return 'node' + (d.children ? ' node--internal' : 'node--leaf')})
-        .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; })
-    
+      .attr('class', function(d) { return 'node' + (d.children ? ' node--internal' : 'node--leaf')})
+      .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; });
     node.append('circle')
       .attr('r', 12.5);
-
-      //TODO: style text in relation to nodes
-    node
-      .append('text')
-          .attr('dy', 50)
-          .attr('x', d => d.children ? -20 : 20 ) 
-          .style('text-anchor', d => d.children ? 'end' : 'start' )
-          .text(d => d.data.name)
-    
+    node.append('text')
+      .attr('dy', 50)
+      .attr('x', d => d.children ? -20 : 20 ) 
+      .style('text-anchor', d => d.children ? 'end' : 'start' )
+      .text(d => d.data.name);
   });
 
   return (
     <div>
-      <svg ref={svg}>
-      </svg>
+      <svg ref={svg}></svg>
     </div>
   );
 }
