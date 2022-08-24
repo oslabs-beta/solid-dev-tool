@@ -1,4 +1,4 @@
-import { Owner, Component, createSignal, JSX, Show} from "solid-js"
+import { Owner, Component, createSignal, JSX, Show, onMount} from "solid-js"
 import  Panel  from './Panel';
 
 // types defined for main button props
@@ -26,7 +26,7 @@ export const AB: Component<ABProps> = ({ children, ...p }) => (
 );
 
 // location of main button
-let defaultStyles: JSX.CSSProperties = { left: 50 +'px', bottom: 400 +'px' };
+let defaultStyles: JSX.CSSProperties = { left: 1 +'px', bottom: 400 +'px' };
 
 
 //types floating action button added any to those that directly translate to Solid
@@ -73,9 +73,9 @@ const Fab: Component<FabProps> = ({
     setIsOpen(false);
   };
 
-
-  // Configuring button
+  // Building Button
   const FabConfig: Component = () => {
+
     return (
       <ul 
       onMouseEnter={enter}
@@ -83,8 +83,7 @@ const Fab: Component<FabProps> = ({
       className={`stf ${isOpen() ? "open" : "closed"}`}
       data-testid="fab"
       style = {style}
-      draggable = {true}
-    >
+      >
       <li className="stf--mb__c">
         <MB
           onClick={toggle}
@@ -106,7 +105,8 @@ const Fab: Component<FabProps> = ({
               onClick = {actionOnClick}>
               Tool
             </AB>
-            <span className={`${"right" in style ? "right" : ""} ${
+            <span 
+              className={`${"right" in style ? "right" : ""} ${
               alwaysShowTitle ? "always-show" : ""}`}
               aria-hidden={ariaHidden}>
                 Debugger
@@ -114,10 +114,11 @@ const Fab: Component<FabProps> = ({
           </li>
         </ul>
       </li>
-    </ul>
+    </ul> 
     );
   };
 
+  
 
   return (
     <div >
