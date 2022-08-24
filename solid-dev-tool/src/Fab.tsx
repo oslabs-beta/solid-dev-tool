@@ -1,5 +1,7 @@
-import { Owner, Component, createSignal, JSX, Show, onMount} from "solid-js"
-import  Panel  from './Panel';
+import { Owner, Component, createSignal, JSX, Show, onMount} from "solid-js";
+import logo from "./img/logo.svg";
+// import debugger from "./img/debugger.png";
+import  Panel  from "./Panel";
 
 // types defined for main button props
 interface MBProps extends Omit<JSX.HTMLAttributes<HTMLButtonElement>, 'tabIndex'> {
@@ -67,9 +69,9 @@ const Fab: Component<FabProps> = ({
 
   const ariaHidden = alwaysShowTitle || !isOpen();
 
+  //function when action button is clicked
   const actionOnClick = () => {
     setIsAbClicked(!isAbClicked());
-    console.log('isAbClicked insided ActionOnClick', isAbClicked())
     setIsOpen(false);
   };
 
@@ -93,7 +95,7 @@ const Fab: Component<FabProps> = ({
           aria-label="Floating menu"
           tabIndex= {0}
         >
-          {icon}
+           <img src={logo} alt="logo" />
         </MB>
         <ul>
           <li className={`stf--ab__c ${"top" in style ? "top" : ''}`}>
@@ -103,7 +105,7 @@ const Fab: Component<FabProps> = ({
               aria-label = "Debugger"
               aria-hidden = {ariaHidden}
               onClick = {actionOnClick}>
-              Tool
+                <img id='debug-img' src={"https://cdn-icons-png.flaticon.com/512/2621/2621056.png"}alt="tool" />
             </AB>
             <span 
               className={`${"right" in style ? "right" : ""} ${

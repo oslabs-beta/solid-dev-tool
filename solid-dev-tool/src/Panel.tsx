@@ -169,8 +169,8 @@ export default function Panel(props) {
 
   function renderPanel(signalList, graphData){
     const display = document.getElementById('Panel');
-    display.removeChild(display.lastChild);
-    display.removeChild(display.lastChild);
+    // display.removeChild(display.lastChild);
+    // display.removeChild(display.lastChild);
 
     render(() => <SignalList signalList={signalList}/>, document.getElementById('Panel'))
     render(() => <Graph graphData={graphData}/>, document.getElementById('Panel'));
@@ -185,11 +185,6 @@ export default function Panel(props) {
     console.log('onMouseMove')
     const h = window.innerHeight - e.clientY;
     if (!offset) offset = height() - h;
-
-    // if (h <= 10) { // if the height of the panel is <= 1
-    //   setIsPanelOpen(false)
-    //   props.setIsAbClicked(!props.isAbClicked());
-    // }
 
     setHeight(h + offset); // updates the height
   };
@@ -216,9 +211,8 @@ export default function Panel(props) {
   return (
     <footer id='Panel' style={{ "font-size": "clamp(16px, 1.5vw, 18px)" }}>
       <div
-        className = "Inside Panel"
+        className = "inside panel"
         style={{
-          
           "font-size": "clamp(12px, 1.5vw, 14px)",
           "font-family": "'Victor Mono', monospace",
           "display": "grid",
@@ -231,19 +225,19 @@ export default function Panel(props) {
           "right": "0px",
           "z-index": 99999,
           "width": "100%",
-          "height": `${height()}px`,
           "max-height": "90%",
           "box-shadow": "rgba(0, 0, 0, 0.3) 0px 0px 20px",
           "border-top": "1px solid rgb(63, 78, 96)",
           "transform-origin": "center top",
           "transition": "transform 0.2s ease 0s, opacity 0.2s ease 0s",
+          "height": `${height()}px`,
           "opacity": props.isAbClicked() ? 1 : 0,
           "pointer-events": props.isAbClicked() ? "all" : "none",
           "transform": `translateY(${props.isAbClicked() ? 0 : 15}px) scale(${props.isAbClicked() ? 1 : 1.02})`,
         }}
         >
           <div
-            className = "Top Panel"
+            className = "top-border-panel"
             style={{
               "padding": "0.0rem",
               "background": 'red',

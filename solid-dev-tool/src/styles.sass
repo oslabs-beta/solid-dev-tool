@@ -1,7 +1,7 @@
 
 .stf
   box-sizing: border-box
-  margin: 25px
+  margin: 15px
   position: fixed
   white-space: nowrap
   z-index: 9998
@@ -69,29 +69,27 @@
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
     &.right
       right: 100%
-
-
+  
+#debug-img
+  height: 52px
+  width: 52px
 
 
 .stf--mb
+  background: none
   height: 56px
   width: 56px
   z-index: 9999
-  background-color: #1ec940
   display: inline-flex
   justify-content: center
   align-items: center
   position: relative
   border: none
   border-radius: 50%
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
   cursor: pointer
   outline: none
   padding: 0
   -webkit-user-drag: none
-  font-weight: bold
-  color: #f1f1f1
-  font-size: 18px
   > *
     transition: ease-in-out transform 0.2s
 
@@ -128,16 +126,13 @@
 
 
 .stf--ab
-  height: 48px
-  width: 48px
-  background-color: #aaaaaa
+  background: none
   display: inline-flex
   justify-content: center
   align-items: center
   position: relative
   border: none
   border-radius: 50%
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
   cursor: pointer
   outline: none
   padding: 0
@@ -147,63 +142,6 @@
   margin-right: 4px
   font-size: 16px
   z-index: 10000
-
-// SolidBottomsheet styles
-.sb-overflow-hidden
-  overflow: hidden
-
-.sb-overlay
-  position: fixed
-
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
-  // background-color: rgba(0, 0, 0, 0.5)
-  display: flex
-  align-items: flex-end
-
-@keyframes slide-up
-  from
-    transform: translateY(100%)
-
-@keyframes slide-down
-  to
-    transform: translateY(100%)
-
-.sb-content
-  background-color: rgb(76, 198, 239)
-  width: 100%
-  animation: slide-up 0.2s ease
-
-.sb-content.sb-is-snapping
-  transition: transform 0.2s ease
-
-.sb-content.sb-is-closing
-  animation: slide-down 0.2s ease
-
-.sb-handle-container
-  padding: 16px 0
-  margin: 0 auto
-  // 
-  cursor: col-resize
-  background-color: #1f8fab
-  background-image: url("data:image/svg+xmlutf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='3'><path d='M2 30 0 M5 0 v30 M8 0 v30' fill='none' stroke='black'/></svg>")
-  background-repeat: no-repeat
-  background-position: center
-  width: 100%
-  height: 5px
-  /* Prevent the browser's built-in drag from interfering */
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
-
-  .sb-handle
-    width: 60px
-    height: 2px
-    background-color: black
-    text-align: center
-    margin: auto
 
 #mainDisplay 
   display: flex
@@ -222,3 +160,4 @@
 #depGraphDIsplay
   border: 1px solid black
   height: 50%
+
