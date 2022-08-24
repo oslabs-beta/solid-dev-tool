@@ -14,9 +14,28 @@ export default function Graph(props) {
     const newSvg = select(svg);
     const width = document.body.clientWidth;
     const height = document.body.clientHeight;
+    const margin = { top: 100, right: 100, bottom: 100, left: 100 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
-    const treeLayout = tree().size([height, width]);
-    newSvg.attr('width', width).attr('height', height);
+    const treeLayout = tree().size([innerHeight, innerWidth]);
+    
+    const g = newSvg
+      .attr('width', width)
+      .attr('height', height)
+      .append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+    function handleZoom(e) {
+      select('newSvg')
+        .attr('transform', e.transform);
+    }
+      
+    const graphZoom = zoom()
+      .on('zoom', handleZoom);
+
+    select('newSvg')
+      .call(zoom);
 
     const root = hierarchy(graphData);
     const links = treeLayout(root).links();
@@ -24,21 +43,31 @@ export default function Graph(props) {
       .x((d) => d.y)
       .y((d) => d.x);
 
-    newSvg
+    g
       .selectAll('path')
       .data(links)
       .enter()
       .append('path')
       .attr('d', linkPathGenerator); 
 
-    newSvg
-      .selectAll('text').data(root.descendants())
-        .enter().append('text')
-          .attr('x', d => d.y)
-          .attr('y', d=> d.x) 
-          .attr('dy', '0.32em')
+    
+    const node = g
+      .selectAll('.node').data(root.descendants())
+      .enter().append('g')
+        .attr('class', function(d) { return 'node' + (d.children ? ' node--internal' : 'node--leaf')})
+        .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; })
+    
+    node.append('circle')
+      .attr('r', 12.5);
+
+      //TODO: style text in relation to nodes
+    node
+      .append('text')
+          .attr('dy', 50)
+          .attr('x', d => d.children ? -20 : 20 ) 
+          .style('text-anchor', d => d.children ? 'end' : 'start' )
           .text(d => d.data.name)
-          
+    
   });
 
   return (

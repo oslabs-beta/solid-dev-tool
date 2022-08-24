@@ -9,8 +9,12 @@ function createSignalGraphButton(signal) {
     that becomes the children of our signal treeNode
   */
   const observers = []
+  
   signal.observers.forEach((obs) => {
-    observers.push({name: obs.name, children: []});
+    console.log('observer is', obs);
+    console.log('obs.name', obs.name);
+    console.log('this is typeof obs.name', typeof obs.name)
+    observers.push({ name: obs.name, children: [] });
   })
   
   /*

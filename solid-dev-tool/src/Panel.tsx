@@ -174,6 +174,21 @@ export default function Panel(props) {
     
   }
   
+  const signal = signalList()[0];
+  const observers = []
+  signal.observers.forEach((obs) => {
+    observers.push({ name: obs.name, children: [] });
+  })
+  
+  /*
+    creating our dependency graph. Name is signalName, children is array of observers
+  */
+  const graphDataTest = {
+    name: `signal name: ${signal.name}` || 'unknown signal name',
+    children: observers
+  }
+  console.log('gdt', graphDataTest);
+
   return (
     <div id='Panel'>
   
@@ -197,6 +212,7 @@ export default function Panel(props) {
             <div id="graphsContainer">
               <div id="structGraphDisplay">
               <Graph graphData={graphData()}/>
+              <Graph graphData={graphDataTest}/>
               </div>
               <div id="depGraphDisplay">
               </div>  
@@ -204,7 +220,6 @@ export default function Panel(props) {
           </div>
         {/* </Show> */}
         {/* </SolidBottomsheet> */}
-      )}
     </div> 
   );
 };
