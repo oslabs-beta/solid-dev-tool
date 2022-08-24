@@ -1,5 +1,5 @@
 {
-  "name": "solid-dev-tool",
+  "name": "@solid-solutions/devtool",
   "version": "1.0.0",
   "description": "In-browser SolidJS debugger and visualizer",
   "main": "./src/Root.tsx",

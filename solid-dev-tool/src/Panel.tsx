@@ -1,8 +1,15 @@
 import { Component, createEffect, createRoot, createSignal, getOwner, Show, JSX, onMount, onCleanup } from "solid-js"
 import SignalList from './SignalList'
 import Graph from './Graph'
-import { SolidBottomsheet } from './SolidDrawer';
 import { render } from "solid-js/web";
+
+
+/* 
+  1. being able to make it reactive
+    removeChild problem
+
+  2. props.setIsAbClicked(!props.isAbClicked()); BUG
+*/
 
 
 type Owner = NonNullable<ReturnType<typeof getOwner>>;
@@ -10,16 +17,14 @@ type Owner = NonNullable<ReturnType<typeof getOwner>>;
 
 /* Equivalent to the panel that shows up?? */
 export default function Panel(props) {
-  const [isOpen, setOpen] = createSignal(false);
+  const [isPanelOpen, setIsPanelOpen] = createSignal(false);
 
-  
   onMount(()=> {
-    // this is from Lyam and Hulkaroy's branch
-    setOpen(true);
-      // working on getting updates
+    setIsPanelOpen(true);
+    // working on getting updates
     // Select the node that will be observed for mutations
     const targetNode = document.getElementById('debugger');
-    console.log('this is target', targetNode);
+    // console.log('this is target', targetNode);
     
     // Options for the observer (which mutations to observe)
     const config = { 
@@ -33,7 +38,7 @@ export default function Panel(props) {
     
     // Callback function to execute when mutations are observed
     const callback = (mutationList, observer) => {
-      console.log('callback running!');
+      // console.log('callback running!');
       // for (const mutation of mutationList) {
       //   if (mutation.type === 'childList') {
       //     console.log('A child node has been added or removed.');
@@ -156,28 +161,105 @@ export default function Panel(props) {
     }
     setSignalList([...signals]);
     // console.log('signals', signalList());
-    console.log('graph data is', graphData());
-    console.log('signalList is', signalList());
+    // console.log('graph data is', graphData());
+    // console.log('signalList is', signalList());
   }
   //TODO: Refactor to not have to call here.
   walker();
 
   function renderPanel(signalList, graphData){
-    console.log('this is rerunning to rerender the info');
-    const display = document.getElementById('debugger-display');
+    const display = document.getElementById('Panel');
     display.removeChild(display.lastChild);
     display.removeChild(display.lastChild);
 
-    render(() => <SignalList signalList={signalList}/>, document.getElementById('debugger-Panel'))
-    render(() => <Graph graphData={graphData}/>, document.getElementById('graph'));
-    
+    render(() => <SignalList signalList={signalList}/>, document.getElementById('Panel'))
+    render(() => <Graph graphData={graphData}/>, document.getElementById('Panel'));
     
   }
+
+  let [height, setHeight] = createSignal(300);
+  const [isDragging, setIsDragging] = createSignal(false);
+
+  let offset: number | undefined;
+  const onMouseMove = (e: MouseEvent) => {
+    console.log('onMouseMove')
+    const h = window.innerHeight - e.clientY;
+    if (!offset) offset = height() - h;
+
+    // if (h <= 10) { // if the height of the panel is <= 1
+    //   setIsPanelOpen(false)
+    //   props.setIsAbClicked(!props.isAbClicked());
+    // }
+
+    setHeight(h + offset); // updates the height
+  };
+  const onMouseUp = () => {
+    console.log('onMouseUp')
+    setIsDragging(false);
+  }
+
+  createEffect(() => {
+    if (isDragging()) {
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseup", onMouseUp);
+    } else {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      offset = undefined;
+    }
+  });
+
+
+  
   
 
   return (
-    <div id='Panel'>
-      <div id="mainDisplay">
+    <footer id='Panel' style={{ "font-size": "clamp(16px, 1.5vw, 18px)" }}>
+      <div
+        className = "Inside Panel"
+        style={{
+          
+          "font-size": "clamp(12px, 1.5vw, 14px)",
+          "font-family": "'Victor Mono', monospace",
+          "display": "grid",
+          "grid-template-rows": "auto minmax(0, 1fr)",
+          "grid-template-columns": "1fr",
+          "background-color": 'green',
+          "color": "white",
+          "position": "fixed",
+          "bottom": "0px",
+          "right": "0px",
+          "z-index": 99999,
+          "width": "100%",
+          "height": `${height()}px`,
+          "max-height": "90%",
+          "box-shadow": "rgba(0, 0, 0, 0.3) 0px 0px 20px",
+          "border-top": "1px solid rgb(63, 78, 96)",
+          "transform-origin": "center top",
+          "transition": "transform 0.2s ease 0s, opacity 0.2s ease 0s",
+          "opacity": props.isAbClicked() ? 1 : 0,
+          "pointer-events": props.isAbClicked() ? "all" : "none",
+          "transform": `translateY(${props.isAbClicked() ? 0 : 15}px) scale(${props.isAbClicked() ? 1 : 1.02})`,
+        }}
+        >
+          <div
+            className = "Top Panel"
+            style={{
+              "padding": "0.0rem",
+              "background": 'red',
+              "display": "flex",
+              "border": '3px solid red',
+              "justify-content": "flex-start",
+              "align-items": "center",
+              "font-size": 24,
+              "height": 30,
+              "line-height": "32px",
+            }}
+            onMouseDown={[setIsDragging, true]}
+          >
+          </div>
+          
+          <div id="mainDisplay">
         <div id="signalsDisplay">
           <SignalList signalList={signalList()}/>
         </div>
@@ -190,6 +272,8 @@ export default function Panel(props) {
           </div>   
         </div>
       </div>
-    </div> 
+        </div>
+
+    </footer> 
   );
 };
