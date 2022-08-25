@@ -1,5 +1,5 @@
 # Solid JS DevTool
- Developer tool that visualizes Solid's signal arhitecture, including the components. It can be added to any Solid JS application.
+ Developer tool that visualizes Solid's signal architecture, including the components. It can be added to any Solid JS application.
  
  ![Screen Shot 2022-08-24 at 9 57 38 PM](https://user-images.githubusercontent.com/86940809/186578516-e514f4ab-e215-4ab7-842b-03bea696d2ca.png)
 
