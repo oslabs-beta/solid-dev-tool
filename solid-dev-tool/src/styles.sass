@@ -151,7 +151,6 @@ text
   font-size: 12px
   text-anchor: middle
   fill: #8DC2E7
-  //text-shadow: -1px -1px 3px white, -1px  1px 3px white, 1px -1px 3px white, 1px  1px 3px white
 
 circle
   fill: #57bdc3
@@ -160,7 +159,6 @@ circle
 
 #mainDisplay 
   display: flex
-  // backdrop-filter: blur(30px)
   background-color: #2C508E
   color: #8DC2E7
   H1
@@ -207,3 +205,33 @@ circle
 
 .signalButton:hover 
   border: 1px solid red
+
+.inside-panel
+  font-size: clamp(12px, 1.5vw, 14px)
+  font-family: 'Victor Mono', monospace
+  display: grid
+  grid-template-rows: auto minmax(0, 1fr)
+  grid-template-columns: 1fr
+  color: white
+  position: fixed
+  bottom: 0px
+  right: 0px
+  z-index: 99999
+  width: 100%
+  max-height: 90%
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px
+  border-top: 1px solid rgb(63, 78, 96)
+  transform-origin: center top
+  transition: transform 0.2s ease 0s, opacity 0.2s ease 0s
+
+.top-border-panel
+  padding: 0.0rem
+  background: #40b8b3
+  display: flex
+  border: 3px solid #40b8b3
+  justify-content: flex-start
+  align-items: center
+  font-size: 24
+  height: 30
+  line-height: 32px
+

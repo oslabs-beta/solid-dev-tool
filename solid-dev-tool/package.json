@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/oslabs-beta/solid-dev-tools#readme",
   "dependencies": {
-    "solid-bottomsheet": "^1.1.0"
+    "d3": "^7.6.1",
+    "solid-js": "^1.4.8"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.0",
     "sass": "^1.54.5"
   }
 }

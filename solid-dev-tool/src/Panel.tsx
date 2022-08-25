@@ -4,12 +4,6 @@ import Graph from './Graph'
 import { render } from "solid-js/web";
 
 
-/* 
-  1. being able to make it reactive
-    removeChild problem
-  2. props.setIsAbClicked(!props.isAbClicked()); BUG
-*/
-
 type Owner = NonNullable<ReturnType<typeof getOwner>>;
 
 
@@ -163,48 +157,16 @@ export default function Panel(props) {
   return (
     <footer id='Panel' style={{ "font-size": "clamp(16px, 1.5vw, 18px)" }}>
       <div
-        className = "inside panel"
+        className = "inside-panel"
         style={{
-          "font-size": "clamp(12px, 1.5vw, 14px)",
-          "font-family": "'Victor Mono', monospace",
-          "display": "grid",
-          "grid-template-rows": "auto minmax(0, 1fr)",
-          "grid-template-columns": "1fr",
-          // "background-color": 'green',
-          "color": "white",
-          "position": "fixed",
-          "bottom": "0px",
-          "right": "0px",
-          "z-index": 99999,
-          "width": "100%",
-          "max-height": "90%",
-          "box-shadow": "rgba(0, 0, 0, 0.3) 0px 0px 20px",
-          "border-top": "1px solid rgb(63, 78, 96)",
-          "transform-origin": "center top",
-          "transition": "transform 0.2s ease 0s, opacity 0.2s ease 0s",
           "height": `${height()}px`,
           "opacity": props.isAbClicked() ? 1 : 0,
           "pointer-events": props.isAbClicked() ? "all" : "none",
           "transform": `translateY(${props.isAbClicked() ? 0 : 15}px) scale(${props.isAbClicked() ? 1 : 1.02})`,
         }}
         >
-          <div
-            className = "top-border-panel"
-            style={{
-              "padding": "0.0rem",
-              "background": '#40b8b3',
-              "display": "flex",
-              "border": '3px solid #40b8b3',
-              "justify-content": "flex-start",
-              "align-items": "center",
-              "font-size": 24,
-              "height": 30,
-              "line-height": "32px",
-            }}
-            onMouseDown={[setIsDragging, true]}
-          >
-          </div>
-          
+          <div className = "top-border-panel" onMouseDown={[setIsDragging, true]}/>
+  
           <div id="mainDisplay">
         <div id="signalsDisplay">
           <SignalList signalList={signalList()}/>
