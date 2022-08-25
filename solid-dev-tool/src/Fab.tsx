@@ -1,5 +1,7 @@
-import { Owner, Component, createSignal, JSX, Show} from "solid-js"
-import  Panel  from './Panel';
+import { Owner, Component, createSignal, JSX, Show, onMount} from "solid-js";
+import logo from "./img/logo.svg";
+// import debugger from "./img/debugger.png";
+import  Panel  from "./Panel";
 
 // types defined for main button props
 interface MBProps extends Omit<JSX.HTMLAttributes<HTMLButtonElement>, 'tabIndex'> {
@@ -26,7 +28,7 @@ export const AB: Component<ABProps> = ({ children, ...p }) => (
 );
 
 // location of main button
-let defaultStyles: JSX.CSSProperties = { left: 50 +'px', bottom: 400 +'px' };
+let defaultStyles: JSX.CSSProperties = { left: 1 +'px', bottom: 400 +'px' };
 
 
 //types floating action button added any to those that directly translate to Solid
@@ -67,15 +69,15 @@ const Fab: Component<FabProps> = ({
 
   const ariaHidden = alwaysShowTitle || !isOpen();
 
+  //function when action button is clicked
   const actionOnClick = () => {
     setIsAbClicked(!isAbClicked());
-    console.log('isAbClicked insided ActionOnClick', isAbClicked())
     setIsOpen(false);
   };
 
-
-  // Configuring button
+  // Building Button
   const FabConfig: Component = () => {
+
     return (
       <ul 
       onMouseEnter={enter}
@@ -83,8 +85,7 @@ const Fab: Component<FabProps> = ({
       className={`stf ${isOpen() ? "open" : "closed"}`}
       data-testid="fab"
       style = {style}
-      draggable = {true}
-    >
+      >
       <li className="stf--mb__c">
         <MB
           onClick={toggle}
@@ -94,7 +95,7 @@ const Fab: Component<FabProps> = ({
           aria-label="Floating menu"
           tabIndex= {0}
         >
-          {icon}
+           <img src={logo} alt="logo" />
         </MB>
         <ul>
           <li className={`stf--ab__c ${"top" in style ? "top" : ''}`}>
@@ -104,9 +105,10 @@ const Fab: Component<FabProps> = ({
               aria-label = "Debugger"
               aria-hidden = {ariaHidden}
               onClick = {actionOnClick}>
-              Tool
+                <img id='debug-img' src={"https://cdn-icons-png.flaticon.com/512/2621/2621056.png"}alt="tool" />
             </AB>
-            <span className={`${"right" in style ? "right" : ""} ${
+            <span 
+              className={`${"right" in style ? "right" : ""} ${
               alwaysShowTitle ? "always-show" : ""}`}
               aria-hidden={ariaHidden}>
                 Debugger
@@ -114,10 +116,11 @@ const Fab: Component<FabProps> = ({
           </li>
         </ul>
       </li>
-    </ul>
+    </ul> 
     );
   };
 
+  
 
   return (
     <div >

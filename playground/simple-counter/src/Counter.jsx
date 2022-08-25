@@ -15,10 +15,6 @@ export default function Counter() {
 
   return (
     <div class='counterDiv'>
-      {/* <ButtonGroup variant="outline" spacing="$10">
-          <Button size="xs" variant="subtle" onClick={add}>Increment</Button>
-          <Button size="xs" variant="subtle" onClick={remove}>Decrement</Button>
-      </ButtonGroup> */}
       <div id='buttons'>
         <button onClick={add}>Increment</button>
         <button onClick={remove}>Decrement</button>

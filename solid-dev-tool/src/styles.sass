@@ -1,6 +1,7 @@
+
 .stf
   box-sizing: border-box
-  margin: 25px
+  margin: 15px
   position: fixed
   white-space: nowrap
   z-index: 9998
@@ -68,29 +69,27 @@
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
     &.right
       right: 100%
-
-
+  
+#debug-img
+  height: 52px
+  width: 52px
 
 
 .stf--mb
+  background: none
   height: 56px
   width: 56px
   z-index: 9999
-  background-color: #1ec940
   display: inline-flex
   justify-content: center
   align-items: center
   position: relative
   border: none
   border-radius: 50%
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
   cursor: pointer
   outline: none
   padding: 0
   -webkit-user-drag: none
-  font-weight: bold
-  color: #f1f1f1
-  font-size: 18px
   > *
     transition: ease-in-out transform 0.2s
 
@@ -119,8 +118,6 @@
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
     &.right
       right: 100%
-
-
   &:nth-child(1)
     transform: translateY(-60px) scale(0)
     transition-delay: 0.21s
@@ -129,16 +126,13 @@
 
 
 .stf--ab
-  height: 48px
-  width: 48px
-  background-color: #aaaaaa
+  background: none
   display: inline-flex
   justify-content: center
   align-items: center
   position: relative
   border: none
   border-radius: 50%
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28)
   cursor: pointer
   outline: none
   padding: 0
@@ -149,58 +143,67 @@
   font-size: 16px
   z-index: 10000
 
-// SolidBottomsheet styles
-.sb-overflow-hidden
-  overflow: hidden
+path
+  fill: none
+  stroke: #57bdc3
 
-.sb-overlay
-  position: fixed
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
-  // background-color: rgba(0, 0, 0, 0.5)
+text
+  font-size: 12px
+  text-anchor: middle
+  fill: #8DC2E7
+  //text-shadow: -1px -1px 3px white, -1px  1px 3px white, 1px -1px 3px white, 1px  1px 3px white
+
+circle
+  fill: #57bdc3
+  stroke: #57bdc3
+
+
+#mainDisplay 
   display: flex
-  align-items: flex-end
+  // backdrop-filter: blur(30px)
+  background-color: #2C508E
+  color: #8DC2E7
+  H1
+    margin: 0
 
-@keyframes slide-up
-  from
-    transform: translateY(100%)
+#signalsDisplay
+  border: 1px solid black
+  padding: 10px
+  width: 25%
 
-@keyframes slide-down
-  to
-    transform: translateY(100%)
+.graphDisplay h1
+  font-size: 12px
 
-.sb-content
-  background-color: rgb(76, 198, 239)
-  width: 100%
-  animation: slide-up 0.2s ease
+#graphsContainer
+  width: 75%
+  border: 1px solid black
+  display: flex
+  flex-direction: column
 
-.sb-content.sb-is-snapping
-  transition: transform 0.2s ease
+#structGraphDisplay
+  border: 1px solid black
+  height: 50%
+  font-family: Victor Mono, monospace
+ 
+  overflow: hidden
+  margin: 0
 
-.sb-content.sb-is-closing
-  animation: slide-down 0.2s ease
+#depGraphDisplay
+  border: 1px solid black
+  height: 50% 
 
-.sb-handle-container
-  padding: 16px 0
-  margin: 0 auto
-  // 
-  cursor: col-resize
-  background-color: #1f8fab
-  background-image: url("data:image/svg+xmlutf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='3'><path d='M2 30 0 M5 0 v30 M8 0 v30' fill='none' stroke='black'/></svg>")
-  background-repeat: no-repeat
-  background-position: center
-  width: 100%
-  height: 5px
-  /* Prevent the browser's built-in drag from interfering */
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
+.signal 
+  padding: 8px
+  white-space: pre-wrap
 
-  .sb-handle
-    width: 60px
-    height: 2px
-    background-color: black
-    text-align: center
-    margin: auto
+.signalButton
+  background: none
+  border-width: 1px
+  border-radius: 10px
+  border-color: whitesmoke
+  color: white
+  
+  margin: 5px
+
+.signalButton:hover 
+  border: 1px solid red

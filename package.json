@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@hope-ui/solid": "^0.6.7",
+    "@stitches/core": "^1.2.8",
+    "d3": "^7.6.1",
+    "solid-transition-group": "^0.0.10"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.0"
+  }
+}

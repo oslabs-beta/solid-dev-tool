@@ -1,70 +1,45 @@
 import { Component, createSignal, For, getOwner, Show } from 'solid-js';
+import Graph from './Graph'
+import { render } from "solid-js/web";
 
+/*
+  Helper function that renders a button for a signal that when clicked 
+  on shows the dependency graph of that signal.
+*/
+function createSignalGraphButton(signal) {
+  const observers = [];
+  signal.observers.forEach((obs) => observers.push({ name: obs.name, children: [] }));
+  let signalName;
+  if(!signal.name) signalName = 'Undefined name';
+  else if(signal.name === 's9') signalName = `${signal.name}`
+  else signalName = signal.name;
+  const graphData = {
+    name: signalName,
+    children: observers
+  };
 
-//sets type for Owner object
-type Owner = NonNullable<ReturnType<typeof getOwner>>;
+  return (
+    <button class="signalButton" onClick={() => {
+      const display = document.getElementById('depGraphDisplay');
+      if(display.lastChild.id !== 'depGraphHead') display.removeChild(display.lastChild)
+      render(() => <Graph graphData={graphData}/>, document.getElementById('depGraphDisplay'));
+    }}>
+      {signalName}
+    </button>
+  );
+}
 
 export default function SignalList(props) {
-  // console.log('entering SignalList before content loaded')
-  /*
-    declare ownerQueue initialized to Owner.owner.owner to get to App/c-1
-    declare owners array to store all owners to check for sources to filter for signals. 
-    declare walked set to keep track of all elements we've seen so we don't perform checks on the same element twice 
-  */
-  const ownerQueue: Owner[] = [props.root]; // props.root
-  // console.log('getOwner log', getOwner().owner.owner.owner.owner);
-  const owners = [];
-  const walked = new Set();
-  /*
-    grabbing everything in the componenet hierarchy. Finding all owners by looping 
-    through owned (owner's children, which themselves can be owners if they have children) 
-  */
-  while (ownerQueue.length) {
-    const currentOwner = ownerQueue.shift();
-    owners.push(currentOwner);
-    walked.add(currentOwner);
-    if (currentOwner.owned) {
-      for (let i = 0; i < currentOwner.owned.length; i++) {
-        ownerQueue.push(currentOwner.owned[i]);
-      }
-    }
-  }
-  // for (let owner in owners) console.log(owners[owner]);
-  // parsing through owners
-  const signals = [];
-  let [signalList, setSignalList] = createSignal([]);
-
-  while (owners.length) {
-    const currentOwner = owners.shift();
-    if (currentOwner.sources) {
-      for (let i = 0; i < currentOwner.sources.length; i++) {
-        // signals do not have owner
-        if (!currentOwner.sources[i].owner)
-          signals.push(currentOwner.sources[i]);
-      }
-    }
-  }
-  setSignalList(signals);
-  // console.log('signals', signalList());
   return (
     <div>
-      <h1>Signals: </h1>
-      <For each={signalList()}>
+      <h1>Signals</h1>
+      <For each={props.signalList}>
         {(el) => (
-          <div>
-            {(() => {
-             if (el.value.name !== undefined) {
-              return `signal name: ${el.value.name}()`;
-             } else {
-              return `signal name: ${el.name}`;
-             }
-            })()}
-
-            {(() => {
-              if (el.name !== 's9') return ` value: ${el.value}`
-            })()}
+          <div class='signal'>
+            {'signal name:' || 'unknown signal name'}
+            {createSignalGraphButton(el)}
+            {(() => {if (el.name !== 's9') return `\n   value: ${el.value}`})()}
           </div>
-          // <div>Root component goes here</div>
         )}
       </For>
     </div>

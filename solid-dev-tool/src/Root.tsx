@@ -6,11 +6,12 @@ import './styles.sass';
 // passing it to the Panel component
 export const DevTool: ParentComponent = props => {
   const [children, root] = createRoot(() => [props.children, getOwner()]);
+  
   return (
     <>
-    <div>
-      {children}
-    </div>
+      <div id="debugger">
+        {children}
+      </div>
       <Fab alwaysShowTitle={true} icon='solid' root = {root} />
     </>
   )
