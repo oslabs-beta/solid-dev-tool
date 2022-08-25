@@ -163,7 +163,7 @@ export default function Panel(props) {
   return (
     <footer id='Panel' style={{ "font-size": "clamp(16px, 1.5vw, 18px)" }}>
       <div
-        className = "Inside Panel"
+        className = "inside panel"
         style={{
           "font-size": "clamp(12px, 1.5vw, 14px)",
           "font-family": "'Victor Mono', monospace",
@@ -177,19 +177,19 @@ export default function Panel(props) {
           "right": "0px",
           "z-index": 99999,
           "width": "100%",
-          "height": `${height()}px`,
           "max-height": "90%",
           "box-shadow": "rgba(0, 0, 0, 0.3) 0px 0px 20px",
           "border-top": "1px solid rgb(63, 78, 96)",
           "transform-origin": "center top",
           "transition": "transform 0.2s ease 0s, opacity 0.2s ease 0s",
+          "height": `${height()}px`,
           "opacity": props.isAbClicked() ? 1 : 0,
           "pointer-events": props.isAbClicked() ? "all" : "none",
           "transform": `translateY(${props.isAbClicked() ? 0 : 15}px) scale(${props.isAbClicked() ? 1 : 1.02})`,
         }}
         >
           <div
-            className = "Top Panel"
+            className = "top-border-panel"
             style={{
               "padding": "0.0rem",
               "background": '#40b8b3',
