@@ -36,7 +36,7 @@ You will then see a button appear on your Solid JS application that has the Soli
 
 [Candace Martin](https://www.linkedin.com/in/candace-e-martin/)  
 
-[Stanley Chen](https://www.linkedin.com/in/stanley-chen-93189a109/)
+[Stanley Chen](https://www.linkedin.com/in/stanwchen/)
 
 [Lyam Hunt](https://www.linkedin.com/in/lyam-hunt-b87ba4112/)
 
