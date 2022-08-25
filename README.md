@@ -1,10 +1,8 @@
 # Solid JS DevTool
  Developer tool that visualizes Solid's signal arhitecture, including the components. It can be added to any Solid JS application.
  
- 
- ![Screen Shot 2022-08-24 at 7 11 38 PM](https://user-images.githubusercontent.com/86940809/186558372-4ace7838-cc1a-4e27-81eb-d3017c6027e1.png)
+ ![Screen Shot 2022-08-24 at 9 57 38 PM](https://user-images.githubusercontent.com/86940809/186578516-e514f4ab-e215-4ab7-842b-03bea696d2ca.png)
 
- 
 ## Installation
 In your command line, go to the main folder where your application's files and package.json are being stored.
 Install the following package:
