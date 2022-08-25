@@ -7,9 +7,6 @@ import './styles.sass';
 export const DevTool: ParentComponent = props => {
   const [children, root] = createRoot(() => [props.children, getOwner()]);
   
-
-  // Stanley's Note: This renders {Children} which should be the app that you are debugging
-  // Why doesn't this render two apps...?
   return (
     <>
       <div id="debugger">

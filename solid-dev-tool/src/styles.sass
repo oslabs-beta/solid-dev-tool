@@ -148,79 +148,67 @@
   font-size: 16px
   z-index: 10000
 
-// SolidBottomsheet styles
-.sb-overflow-hidden
-  overflow: hidden
+path
+  fill: none
+  stroke: #57bdc3
 
-.sb-overlay
-  position: fixed
+text
+  font-size: 12px
+  text-anchor: middle
+  fill: #8DC2E7
+  //text-shadow: -1px -1px 3px white, -1px  1px 3px white, 1px -1px 3px white, 1px  1px 3px white
 
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
-  // background-color: rgba(0, 0, 0, 0.5)
-  display: flex
-  align-items: flex-end
+circle
+  fill: #57bdc3
+  stroke: #57bdc3
 
-@keyframes slide-up
-  from
-    transform: translateY(100%)
-
-@keyframes slide-down
-  to
-    transform: translateY(100%)
-
-.sb-content
-  background-color: rgb(76, 198, 239)
-  width: 100%
-  animation: slide-up 0.2s ease
-
-.sb-content.sb-is-snapping
-  transition: transform 0.2s ease
-
-.sb-content.sb-is-closing
-  animation: slide-down 0.2s ease
-
-.sb-handle-container
-  padding: 16px 0
-  margin: 0 auto
-  // 
-  cursor: col-resize
-  background-color: #1f8fab
-  background-image: url("data:image/svg+xmlutf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='3'><path d='M2 30 0 M5 0 v30 M8 0 v30' fill='none' stroke='black'/></svg>")
-  background-repeat: no-repeat
-  background-position: center
-  width: 100%
-  height: 5px
-  /* Prevent the browser's built-in drag from interfering */
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
-
-  .sb-handle
-    width: 60px
-    height: 2px
-    background-color: black
-    text-align: center
-    margin: auto
 
 #mainDisplay 
   display: flex
-  justify-content: space-between
+  // backdrop-filter: blur(30px)
+  background-color: #2C508E
+  color: #8DC2E7
+  H1
+    margin: 0
 
-#signalsDisplay 
+#signalsDisplay
   border: 1px solid black
+  padding: 10px
+  width: 25%
 
-#graphsContainer 
-  width: 70%
+.graphDisplay h1
+  font-size: 12px
+
+#graphsContainer
+  width: 75%
   border: 1px solid black
   display: flex
   flex-direction: column
 
-#structGraphDisplay 
-#depGraphDIsplay
+#structGraphDisplay
   border: 1px solid black
   height: 50%
-
+  font-family: Victor Mono, monospace
  
+  overflow: hidden
+  margin: 0
+
+#depGraphDisplay
+  border: 1px solid black
+  height: 50% 
+
+.signal 
+  padding: 8px
+  white-space: pre-wrap
+
+.signalButton
+  background: none
+  border-width: 1px
+  border-radius: 10px
+  border-color: whitesmoke
+  color: white
+  
+  margin: 5px
+
+.signalButton:hover 
+  border: 1px solid red

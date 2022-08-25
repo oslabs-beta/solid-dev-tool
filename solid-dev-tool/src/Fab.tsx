@@ -69,7 +69,6 @@ const Fab: Component<FabProps> = ({
 
   const actionOnClick = () => {
     setIsAbClicked(!isAbClicked());
-    console.log('isAbClicked insided ActionOnClick', isAbClicked())
     setIsOpen(false);
   };
 

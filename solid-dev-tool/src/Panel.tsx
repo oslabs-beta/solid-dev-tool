@@ -7,26 +7,22 @@ import { render } from "solid-js/web";
 /* 
   1. being able to make it reactive
     removeChild problem
-
   2. props.setIsAbClicked(!props.isAbClicked()); BUG
 */
-
 
 type Owner = NonNullable<ReturnType<typeof getOwner>>;
 
 
 /* Equivalent to the panel that shows up?? */
 export default function Panel(props) {
-  const [isPanelOpen, setIsPanelOpen] = createSignal(false);
 
+  /*
+    TODO: 
+      1. DOCUMENTATION
+      2. Improve mutation observing to be more reactive
+  */
   onMount(()=> {
-    setIsPanelOpen(true);
-    // working on getting updates
-    // Select the node that will be observed for mutations
     const targetNode = document.getElementById('debugger');
-    // console.log('this is target', targetNode);
-    
-    // Options for the observer (which mutations to observe)
     const config = { 
       attributes: true, 
       characterData: true,
@@ -35,36 +31,16 @@ export default function Panel(props) {
       attributeOldValue: true,
       characterDataOldValue: true 
     };
-    
-    // Callback function to execute when mutations are observed
     const callback = (mutationList, observer) => {
-      // console.log('callback running!');
-      // for (const mutation of mutationList) {
-      //   if (mutation.type === 'childList') {
-      //     console.log('A child node has been added or removed.');
-      //   } else if (mutation.type === 'attributes') {
-      //     console.log(`The ${mutation.attributeName} attribute was modified.`);
-      //   }
-      // }
-      walker();
-      renderPanel(signalList(), graphData());
+      if(props.isAbClicked()) {
+        walker();
+        rerenderPanel(signalList(), graphData());
+      }
     };
-    
-    // Create an observer instance linked to the callback function
     const observer = new MutationObserver(callback);
-    
-    // Start observing the target node for configured mutations
     observer.observe(targetNode, config);
+  });
     
-    // Later, you can stop observing
-    //observer.disconnect();
-  })
-    
-  
-  
-  
-  const [clicked, setClicked] = createSignal(false);
-  const [initial, setInitial] = createSignal(true);
   
   const [signalList, setSignalList] = createSignal();
   const [graphData, setGraphData] = createSignal();
@@ -96,36 +72,25 @@ export default function Panel(props) {
         settreeNode variable. 
     */
     while (ownerQueue.length) {
-      // code has NO clue which owner currentOwner really is
       const currentOwner = ownerQueue.shift();
       let currentTreeNode;
-      //console.log('currentOwner.name', currentOwner.name)
-
-      // This is the initial run, we don't need to do a look up. This is our top level node.
+  
       if(Object.keys(tree).length === 0) {
         tree.name = currentOwner.name; 
-        tree.children = [];// an array of node objects that also have name + children
+        tree.children = [];
         currentTreeNode = tree; 
       }
-
-      // Not initial run, need to find the corresponding treeNode to currentOwner
+    
       const childrensQueue = [...tree.children]; 
-      // console.log('This is childrens Queue before entering the while loop', childrensQueue);
       while(childrensQueue.length) {
         const currentChild = childrensQueue.shift();
-        // console.log({currentChild});
-        // we found the treeNode related to currentOwner
         if(currentChild.name === currentOwner.name) {
           currentTreeNode = currentChild; 
-          // console.log('we found the currentChild!!!')
           break; 
         }
-        // this isnt the treeNode we want, but the treeNode we want might be nested deeper
         currentChild.children.forEach((child) => childrensQueue.push(child)); 
-        // console.log('This is childrens Queue after entering the while loop', childrensQueue);
       }
 
-      // console.log('tree.children', tree.children) 
       owners.push(currentOwner);
       walked.add(currentOwner);
       if (currentOwner.owned) {
@@ -138,17 +103,9 @@ export default function Panel(props) {
         }
       }
     }
-    // console.log('tree', tree)
     setGraphData(tree);
     
-
-
-    for (let owner in owners) {
-      //console.log(owners[owner]);
-    }
-    // parsing through owners
     const signals = new Set();
-
     while (owners.length) {
       const currentOwner = owners.shift();
       if (currentOwner.sources) {
@@ -159,22 +116,17 @@ export default function Panel(props) {
         }
       }
     }
-    setSignalList([...signals]);
-    // console.log('signals', signalList());
-    // console.log('graph data is', graphData());
-    // console.log('signalList is', signalList());
+    setSignalList([...signals]);;
   }
-  //TODO: Refactor to not have to call here.
   walker();
 
-  function renderPanel(signalList, graphData){
-    const display = document.getElementById('Panel');
-    display.removeChild(display.lastChild);
-    display.removeChild(display.lastChild);
-
-    render(() => <SignalList signalList={signalList}/>, document.getElementById('Panel'))
-    render(() => <Graph graphData={graphData}/>, document.getElementById('Panel'));
-    
+  function rerenderPanel(signalList, graphData){
+    const signalsDisplay = document.getElementById('signalsDisplay');
+    const structGraphDisplay = document.getElementById('structGraphDisplay')
+    signalsDisplay.removeChild(signalsDisplay.lastChild);
+    structGraphDisplay.removeChild(structGraphDisplay.lastChild);
+    render(() => <SignalList signalList={signalList}/>, document.getElementById('signalsDisplay'))
+    render(() => <Graph graphData={graphData}/>, document.getElementById('structGraphDisplay'));
   }
 
   let [height, setHeight] = createSignal(300);
@@ -182,10 +134,10 @@ export default function Panel(props) {
 
   let offset: number | undefined;
   const onMouseMove = (e: MouseEvent) => {
-    console.log('onMouseMove')
     const h = window.innerHeight - e.clientY;
     if (!offset) offset = height() - h;
 
+    // TODO: QoL feature to close panel by dragging all the way down
     // if (h <= 10) { // if the height of the panel is <= 1
     //   setIsPanelOpen(false)
     //   props.setIsAbClicked(!props.isAbClicked());
@@ -193,10 +145,9 @@ export default function Panel(props) {
 
     setHeight(h + offset); // updates the height
   };
-  const onMouseUp = () => {
-    console.log('onMouseUp')
-    setIsDragging(false);
-  }
+
+  const onMouseUp = () => setIsDragging(false);
+  
 
   createEffect(() => {
     if (isDragging()) {
@@ -209,22 +160,17 @@ export default function Panel(props) {
     }
   });
 
-
-  
-  
-
   return (
     <footer id='Panel' style={{ "font-size": "clamp(16px, 1.5vw, 18px)" }}>
       <div
         className = "Inside Panel"
         style={{
-          
           "font-size": "clamp(12px, 1.5vw, 14px)",
           "font-family": "'Victor Mono', monospace",
           "display": "grid",
           "grid-template-rows": "auto minmax(0, 1fr)",
           "grid-template-columns": "1fr",
-          "background-color": 'green',
+          // "background-color": 'green',
           "color": "white",
           "position": "fixed",
           "bottom": "0px",
@@ -246,9 +192,9 @@ export default function Panel(props) {
             className = "Top Panel"
             style={{
               "padding": "0.0rem",
-              "background": 'red',
+              "background": '#40b8b3',
               "display": "flex",
-              "border": '3px solid red',
+              "border": '3px solid #40b8b3',
               "justify-content": "flex-start",
               "align-items": "center",
               "font-size": 24,
@@ -264,16 +210,16 @@ export default function Panel(props) {
           <SignalList signalList={signalList()}/>
         </div>
         <div id="graphsContainer">
-          <div id="structGraphDisplay">
-            <Graph graphData={graphData()}/>
+          <div class="graphDisplay" id="structGraphDisplay">
+            <h1>Structural Graph</h1>
+            <Graph class="graph" graphData={graphData()}/>
           </div>
-          <div id="depGraphDisplay">
-            <svg id="placeHolder"></svg>
-          </div>   
+          <div class="graphDisplay" id="depGraphDisplay">
+            <h1 id='depGraphHead'>Dependency Graph</h1>
+          </div> 
         </div>
       </div>
         </div>
-
     </footer> 
   );
 };
