@@ -2,6 +2,9 @@
  Developer tool that visualizes Solid's signal arhitecture, including the components. It can be added to any Solid JS application.
  
  
+ ![Screen Shot 2022-08-24 at 7 11 38 PM](https://user-images.githubusercontent.com/86940809/186558372-4ace7838-cc1a-4e27-81eb-d3017c6027e1.png)
+
+ 
 ## Installation
 In your command line, go to the main folder where your application's files and package.json are being stored.
 Install the following package:
@@ -22,6 +25,9 @@ Import { DevTool } in the highest level component, typically it is your index fi
 
 
 You will then see a button appear on your Solid JS application that has the Solid JS logo. When you hover over the button, the debugger action button will show up. Click on the button to show the panel.
+
+![l5qArwF](https://user-images.githubusercontent.com/86940809/186559623-c55c0f71-c74f-42e8-a71e-0633fa630080.gif)
+
 
 
 ## Meet Our Team
