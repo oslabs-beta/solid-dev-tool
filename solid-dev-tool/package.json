@@ -4,7 +4,7 @@
   "description": "In-browser SolidJS debugger and visualizer",
   "main": "./src/Root.tsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@types/d3": "^7.4.0",
+    "cypress": "^11.0.1",
     "sass": "^1.54.5"
   }
 }
