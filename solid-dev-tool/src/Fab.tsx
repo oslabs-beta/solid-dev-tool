@@ -86,7 +86,7 @@ const Fab: Component<FabProps> = ({
       data-testid="fab"
       style = {style}
       >
-      <li className="stf--mb__c">
+      <li className="stf-mb_c">
         <MB
           onClick={toggle}
           style={mainButtonStyles}
