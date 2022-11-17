@@ -54,10 +54,7 @@ describe('testing action buttons', () => {
 
 describe('testing panel where reactive graph is displayed', () => {
   beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
+    cy.viewport(1024, 768)
     cy.visit('/')
     cy.get('[data-testid="fab"]').click()
     .should('have.class', 'stf open')
@@ -70,7 +67,14 @@ describe('testing panel where reactive graph is displayed', () => {
     cy.get('footer').should('have.id', 'Panel')
   })
 
-  // it('Panel should have a border that can be dragged')
+  it('Panel should have a border that can be dragged', () => {
+    cy.get('footer')
+    .get('.inside-panel').should('have.css', 'height', '300px')
+    .find('.top-border-panel')
+    .trigger('mousedown', { which : 0})
+    .trigger('mousemove', { clientX: 200, clientY: 300 })
+    .trigger('mouseup')
+  })
 
 })
 
