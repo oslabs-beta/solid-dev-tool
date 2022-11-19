@@ -5,13 +5,29 @@ import {
   onCleanup,
   For,
   getOwner,
+  onMount,
 } from 'solid-js';
 import { createStore } from 'solid-js/store';
-console.log('getOwner() outside of App', getOwner());
+
 function App() {
-  console.log('getOwner() 1st line of App', getOwner());
-  let newName, newScore;
-  const [state, setState] = createStore({
+  type NameScore = HTMLDivElement | undefined;
+  type Players = {players:{name: string, score: number}[]};
+  type Player = {name: string, score: number};
+  type Proxy = {targer:{}, handler:{}}
+
+
+  let newName: NameScore , newScore: NameScore;
+
+  //used to define the type of 'ref'
+  onMount(() => {
+    if (!newName || !newScore) return;
+    newName.focus();
+    newScore.focus(); 
+  });
+
+
+  //setting state to store an initial list of players
+  const [state, setState] = createStore<Players>({
       players: [
         { name: 'Mark', score: 52 },
         { name: 'Troy', score: 2 },
@@ -19,10 +35,12 @@ function App() {
         { name: 'David', score: 8 },
       ],
     }),
+
     lastPos = new WeakMap(),
     curPos = new WeakMap(),
+
     getSorted = createMemo((list = []) => {
-      list.forEach((p, i) => lastPos.set(p, i));
+      list.forEach((p:Proxy, i: number) => lastPos.set(p, i), );
       const newList = state.players.slice().sort((a, b) => {
         if (b.score === a.score) return a.name.localeCompare(b.name); // stabalize the sort
         return b.score - a.score;
@@ -33,6 +51,8 @@ function App() {
       );
       return updated ? newList : list;
     }),
+
+
     handleAddClick = () => {
       const name = newName.value,
         score = +newScore.value;
@@ -40,17 +60,23 @@ function App() {
       setState('players', (p) => [...p, { name: name, score: score }]);
       newName.value = newScore.value = '';
     },
-    handleDeleteClick = (player) => {
+
+
+    handleDeleteClick = (player: Player) => {
       const idx = state.players.indexOf(player);
       setState('players', (p) => [...p.slice(0, idx), ...p.slice(idx + 1)]);
     },
-    handleScoreChange = (player, { target }) => {
+
+
+    handleScoreChange = (player: Player, { target }) => {
       const score = +target.value;
       const idx = state.players.indexOf(player);
       if (isNaN(+score) || idx < 0) return;
       setState('players', idx, 'score', score);
     },
-    createStyles = (player) => {
+
+    
+    createStyles = (player: Player) => {
       const [style, setStyle] = createSignal();
       createComputed(() => {
         getSorted();
@@ -66,15 +92,13 @@ function App() {
       });
       return style;
     };
-  console.log('getOwner', { getOwner });
-  console.log('getOwner(state)', getOwner(state));
-  console.log('getOwner(score)', getOwner(state.players.score));
-  console.log('getOwner()', getOwner());
+
+
   return (
     <div id='scoreboard'>
       <div class='board'>
         <For each={getSorted()}>
-          {(player) => {
+          {(player: Player) => {
             const getStyles = createStyles(player),
               { name } = player;
             return (
