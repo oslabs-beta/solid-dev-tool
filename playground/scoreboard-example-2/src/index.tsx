@@ -1,5 +1,10 @@
+/* @refresh reload */
 import { render } from 'solid-js/web';
+import App from './App';
+import { DevTool } from '../../../solid-dev-tool/src/Root'
 
-import { TodoList } from './todo-list';
-
-render(() => <TodoList />, document.getElementById('root') as HTMLElement);
+render(() => (
+  <DevTool>
+    <App/>
+  </DevTool>
+), document.getElementById('root') as HTMLElement)
