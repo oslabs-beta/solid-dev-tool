@@ -15,7 +15,7 @@ function App() {
   type Player = {name: string, score: number};
   type Proxy = {targer:{}, handler:{}}
 
-  
+
   let newName: NameScore , newScore: NameScore;
 
   //used to define the type of 'ref'
@@ -25,7 +25,6 @@ function App() {
     newScore.focus(); 
   });
 
-  
 
   //setting state to store an initial list of players
   const [state, setState] = createStore<Players>({
@@ -69,7 +68,7 @@ function App() {
     },
 
 
-    handleScoreChange = (player:Player, { target }) => {
+    handleScoreChange = (player: Player, { target }) => {
       const score = +target.value;
       const idx = state.players.indexOf(player);
       if (isNaN(+score) || idx < 0) return;
@@ -93,12 +92,6 @@ function App() {
       });
       return style;
     };
-
-  // console.log('getOwner', { getOwner });
-  // console.log('getOwner(state)', getOwner(state));
-  // console.log('getOwner(score)', getOwner(state.players.score));
-  // console.log('getOwner()', getOwner());
-
 
 
   return (
