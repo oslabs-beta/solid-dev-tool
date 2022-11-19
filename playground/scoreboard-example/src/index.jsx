@@ -1,11 +1,10 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
-import { attachDebugger, Debugger } from "@solid-devtools/debugger"
 import App from './App';
-import { DevTools } from '../../../solid-dev-tool/src/Root'
+import { DevTool } from '../../../solid-dev-tool/src/Root'
 
 render(() => (
-  <DevTools>
+  <DevTool>
     <App/>
-  </DevTools>
+  </DevTool>
 ), document.getElementById('root'))
