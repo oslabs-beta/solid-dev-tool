@@ -4,17 +4,14 @@ import {
   createComputed,
   onCleanup,
   For,
-  getOwner,
   onMount,
 } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 function App() {
-  type NameScore = HTMLDivElement | undefined;
+  type NameScore = HTMLInputElement;
   type Players = {players:{name: string, score: number}[]};
   type Player = {name: string, score: number};
-  type Proxy = {targer:{}, handler:{}}
-
 
   let newName: NameScore , newScore: NameScore;
 
@@ -39,8 +36,8 @@ function App() {
     lastPos = new WeakMap(),
     curPos = new WeakMap(),
 
-    getSorted = createMemo((list = []) => {
-      list.forEach((p:Proxy, i: number) => lastPos.set(p, i), );
+    getSorted = createMemo((list: any = []) => {
+      list.forEach((p:Player, i: number) => lastPos.set(p, i), );
       const newList = state.players.slice().sort((a, b) => {
         if (b.score === a.score) return a.name.localeCompare(b.name); // stabalize the sort
         return b.score - a.score;
@@ -68,7 +65,7 @@ function App() {
     },
 
 
-    handleScoreChange = (player: Player, { target }) => {
+    handleScoreChange = (player: Player, { target }: any) => {
       const score = +target.value;
       const idx = state.players.indexOf(player);
       if (isNaN(+score) || idx < 0) return;
