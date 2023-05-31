@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from 'solid-js/web';
 import {DevTool} from '../src/Root';
 
 test('renders the landing page', () => {
